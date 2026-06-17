@@ -332,13 +332,17 @@ const galleryAPI = {
     const apiEndpoint = isDevelopment ? '/api/gallery-get' : GALLERY_GET_ENDPOINT;
     console.log(`🌐 Calling API endpoint: ${apiEndpoint}`);
     
+    // Send the admin token when available so authenticated admins receive
+    // hidden images; anonymous callers get visible images only.
+    const token = await auth.currentUser?.getIdToken();
     const response = await fetch(apiEndpoint, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
       }
     });
-    
+
     if (!response.ok) {
       console.warn(`API call failed (${response.status}), falling back to development data`);
       return await developmentFallback();
@@ -442,49 +446,55 @@ export const useGalleryStorage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Load gallery data from the API. Pass force=true to bypass the
+  // initialization guard (e.g. to re-fetch with an admin token after login).
+  const loadGalleryData = useCallback(async (force = false) => {
+    // Only load once unless forced (prevents double execution in Strict Mode)
+    if (isInitializedRef.current && !force) {
+      console.log(`⏭ Instance ${instanceIdRef.current} already initialized, skipping load`);
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      console.log(`📡 Instance ${instanceIdRef.current} fetching from API...`);
+      const response = await galleryAPI.fetchGallery();
+
+      console.log(`✅ Instance ${instanceIdRef.current} API fetch successful, setting data:`, response.images[0]?.title);
+      console.log(`✅ Loaded ${response.images?.length} images with ${response.images?.filter(img => img.visible).length} visible`);
+
+      setGalleryImages(response.images || []);
+      setIsLoaded(true);
+      setError(null);
+
+      // Mark as initialized after successful load
+      isInitializedRef.current = true;
+
+    } catch (err) {
+      console.error(`❌ Instance ${instanceIdRef.current} API fetch failed:`, err);
+      setError(err.message);
+      setGalleryImages(fallbackGalleryImages); // Fallback to empty array
+      setIsLoaded(true); // Still mark as loaded to prevent loading state
+      isInitializedRef.current = true; // Mark as initialized even on error
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  // Re-fetch gallery data, bypassing the initialization guard. Used by admin
+  // pages so an authenticated request returns hidden images too.
+  const refetch = useCallback(() => loadGalleryData(true), [loadGalleryData]);
+
   // API data loading effect - improved for Strict Mode
   useEffect(() => {
     console.log(`🚀 API Load: Instance ${instanceIdRef.current} starting data fetch from API at ${window.location.pathname}`);
-    
-    const loadGalleryData = async () => {
-      // Only load if not already initialized (prevents double execution in Strict Mode)
-      if (isInitializedRef.current) {
-        console.log(`⏭ Instance ${instanceIdRef.current} already initialized, skipping load`);
-        return;
-      }
-      
-      setIsLoading(true);
-      setError(null);
-      
-      try {
-        console.log(`📡 Instance ${instanceIdRef.current} fetching from API...`);
-        const response = await galleryAPI.fetchGallery();
-        
-        console.log(`✅ Instance ${instanceIdRef.current} API fetch successful, setting data:`, response.images[0]?.title);
-        console.log(`✅ Loaded ${response.images?.length} images with ${response.images?.filter(img => img.visible).length} visible`);
-        
-        setGalleryImages(response.images || []);
-        setIsLoaded(true);
-        setError(null);
-        
-        // Mark as initialized after successful load
-        isInitializedRef.current = true;
-        
-      } catch (err) {
-        console.error(`❌ Instance ${instanceIdRef.current} API fetch failed:`, err);
-        setError(err.message);
-        setGalleryImages(fallbackGalleryImages); // Fallback to empty array
-        setIsLoaded(true); // Still mark as loaded to prevent loading state
-        isInitializedRef.current = true; // Mark as initialized even on error
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
+
     // Add slight delay to prevent race conditions in Strict Mode
-    const timeoutId = setTimeout(loadGalleryData, 0);
+    const timeoutId = setTimeout(() => loadGalleryData(false), 0);
     return () => clearTimeout(timeoutId);
-  }, []); // Empty dependency array to run only on mount
+  }, [loadGalleryData]); // Runs once on mount (loadGalleryData is stable)
 
   // Gallery page refresh effect - use existing data, don't re-fetch
   useEffect(() => {
@@ -653,6 +663,7 @@ export const useGalleryStorage = () => {
     deleteImage,
     toggleImageVisibility,
     uploadImage,
-    resetToDefaults
+    resetToDefaults,
+    refetch
   };
 };
