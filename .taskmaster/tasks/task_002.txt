@@ -1,0 +1,43 @@
+# Task ID: 2
+# Title: Implement Responsive Navigation Bar ✅
+# Status: completed
+# Dependencies: 1
+# Priority: high
+# Description: Develop a responsive navigation bar that adapts to desktop and mobile, with ARIA labels and keyboard navigation.
+# Details:
+Create a NavBar component using semantic HTML and ARIA attributes. Implement mobile hamburger menu with accessible toggling. Style with pure CSS using custom properties for dark theme and lime accent. Integrate with React Router for navigation.
+
+# Test Strategy:
+Test navigation on desktop and mobile. Validate keyboard navigation and ARIA compliance using screen readers and accessibility tools.
+
+# Subtasks:
+## 1. Create NavBar Component Structure with Semantic HTML ✅ [completed]
+### Dependencies: None
+### Description: Build the foundational NavBar component using semantic HTML elements to ensure accessibility and proper document structure.
+### Details:
+Use <nav>, <ul>, and <li> elements to structure the navigation bar. Include placeholder links for navigation items. Ensure the component is set up in the React project and ready for further enhancements.
+
+## 2. Integrate ARIA Attributes and Keyboard Navigation ✅ [completed]
+### Dependencies: 2.1
+### Description: Enhance the NavBar with ARIA labels and keyboard navigation support for accessibility.
+### Details:
+Add appropriate ARIA roles, labels, and attributes (e.g., aria-label, aria-expanded, aria-controls) to navigation elements. Implement keyboard navigation (Tab, Shift+Tab, Enter, and Escape) for menu items and toggles. Ensure focus indicators are visible.
+
+## 3. Implement Responsive Hamburger Menu for Mobile ✅ [completed]
+### Dependencies: 2.2
+### Description: Add a hamburger menu for mobile viewports with accessible toggling functionality.
+### Details:
+Create a hamburger button that appears on small screens using CSS media queries. Implement toggle logic in React to open/close the menu. Ensure the toggle is accessible (focusable, ARIA attributes update on state change).
+
+## 4. Style NavBar with CSS Custom Properties for Dark Theme and Lime Accent ✅ [completed]
+### Dependencies: 2.3
+### Description: Apply styles to the NavBar using pure CSS, leveraging custom properties for dark theme and lime accent color.
+### Details:
+Define CSS variables for colors (dark background, lime accent). Style the NavBar for both desktop and mobile layouts. Ensure transitions and hover/focus states are visually clear. Support dark mode by default.
+
+## 5. Integrate NavBar with React Router for Navigation ✅ [completed]
+### Dependencies: 2.4
+### Description: Connect the NavBar navigation items to React Router routes for seamless client-side navigation.
+### Details:
+Replace placeholder links with <NavLink> or <Link> components from React Router. Ensure active route highlighting and correct navigation behavior. Test navigation between different routes.
+

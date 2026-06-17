@@ -1,0 +1,43 @@
+# Task ID: 8
+# Title: Ensure Accessibility and Semantic HTML Across Site ✅
+# Status: completed
+# Dependencies: 3, 4, 5, 6, 7
+# Priority: high
+# Description: Audit and enhance accessibility: ARIA labels, semantic HTML, keyboard navigation, and screen reader support.
+# Details:
+Review all components and pages for semantic HTML usage. Add ARIA attributes where needed. Ensure all interactive elements are keyboard accessible. Test with screen readers and accessibility tools.
+
+# Test Strategy:
+Run accessibility audits (Lighthouse, axe). Manually test keyboard navigation and screen reader output.
+
+# Subtasks:
+## 1. Audit All Pages and Components for Semantic HTML ✅ [completed]
+### Dependencies: None
+### Description: Review every page and component in the codebase to identify improper or missing semantic HTML elements.
+### Details:
+Go through each template and component, listing areas where non-semantic tags (e.g., <div>, <span>) are used in place of semantic elements (e.g., <header>, <nav>, <main>, <section>, <article>, <button>, <form>, etc.). Document all findings for later remediation.
+
+## 2. Refactor Components to Use Semantic HTML Elements ✅ [completed]
+### Dependencies: 8.1
+### Description: Update the codebase to replace non-semantic elements with appropriate semantic HTML tags based on the audit findings.
+### Details:
+For each issue identified in the audit, refactor the markup to use semantic elements. Ensure that the structure of the page remains visually consistent after changes. Commit changes incrementally for easier review.
+
+## 3. Add and Refine ARIA Attributes Where Necessary ✅ [completed]
+### Dependencies: 8.2
+### Description: Enhance accessibility by adding or updating ARIA attributes on elements that require additional context for assistive technologies.
+### Details:
+Identify interactive or complex UI elements (e.g., custom buttons, modals, menus) that need ARIA roles, labels, or properties. Add or update ARIA attributes such as aria-label, aria-labelledby, aria-describedby, and roles to improve screen reader support.
+
+## 4. Ensure Keyboard Navigation for All Interactive Elements ✅ [completed]
+### Dependencies: 8.3
+### Description: Verify and implement keyboard accessibility for all interactive elements, ensuring users can navigate and interact using only the keyboard.
+### Details:
+Test all buttons, links, forms, and custom controls for focusability and keyboard interaction (e.g., Tab, Enter, Space, Arrow keys). Add tabindex, keyboard event handlers, or adjust markup as needed to support full keyboard navigation.
+
+## 5. Test with Screen Readers and Accessibility Tools ✅ [completed]
+### Dependencies: 8.4
+### Description: Perform comprehensive testing using screen readers and automated accessibility tools to validate improvements and catch remaining issues.
+### Details:
+Use screen readers (e.g., NVDA, VoiceOver) to navigate the site, ensuring content is announced correctly and navigation is logical. Run automated tools (e.g., axe, Lighthouse) to identify any remaining accessibility issues and address them as needed.
+

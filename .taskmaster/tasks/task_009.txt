@@ -1,0 +1,43 @@
+# Task ID: 9
+# Title: Optimize Performance: Lazy Loading and Image Optimization ✅
+# Status: completed
+# Dependencies: 3, 4, 7
+# Priority: medium
+# Description: Implement performance optimizations including lazy loading for images/components and optimized media assets.
+# Details:
+Use React.lazy/Suspense for code splitting where appropriate. Implement lazy loading for gallery images and hero video. Optimize images for web (WebP, compression). Ensure fast load times and smooth UX.
+
+# Test Strategy:
+Measure load times and Lighthouse performance scores. Validate lazy loading visually and via network inspector.
+
+# Subtasks:
+## 1. Identify and Audit Media Assets and Components ✅ [completed]
+### Dependencies: None
+### Description: Catalog all images, videos, and React components that can benefit from lazy loading or optimization. Document their usage locations and loading patterns.
+### Details:
+Review the codebase to list all gallery images, hero video, and large or infrequently used components. Note where each asset/component is loaded and how it impacts initial page load. Prepare a spreadsheet or document summarizing findings.
+
+## 2. Implement React.lazy and Suspense for Code Splitting ✅ [completed]
+### Dependencies: 9.1
+### Description: Apply React.lazy and Suspense to defer loading of non-critical components, such as galleries or modals, to reduce initial bundle size.
+### Details:
+Refactor identified components to use React.lazy for dynamic imports. Wrap them in Suspense with appropriate fallback UI. Ensure routing or conditional rendering triggers lazy loading as intended.
+
+## 3. Implement Lazy Loading for Images and Hero Video ✅ [completed]
+### Dependencies: 9.1
+### Description: Enable lazy loading for gallery images and the hero video to defer their loading until they enter the viewport.
+### Details:
+Use the 'loading="lazy"' attribute for <img> tags where supported. For the hero video and images requiring more control, use Intersection Observer API to trigger loading when elements are near the viewport. Ensure compatibility across browsers.
+
+## 4. Optimize Images for Web Delivery ✅ [completed]
+### Dependencies: 9.1
+### Description: Convert images to modern formats (e.g., WebP), compress them, and ensure responsive sizing for different devices.
+### Details:
+Batch process images using tools like ImageMagick or online compressors to generate WebP and compressed JPEG/PNG versions. Update image references in the code to use <picture> elements with multiple sources for responsive and format-specific loading.
+
+## 5. Validate Performance Improvements and User Experience ✅ [completed]
+### Dependencies: 9.2, 9.3, 9.4
+### Description: Test the application to ensure optimizations result in faster load times and smooth user experience without breaking functionality.
+### Details:
+Use tools like Lighthouse, WebPageTest, and Chrome DevTools to measure performance metrics before and after optimizations. Gather feedback on UX smoothness and check for any regressions or loading issues.
+

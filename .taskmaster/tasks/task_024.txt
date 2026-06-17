@@ -1,0 +1,202 @@
+# Task ID: 24
+# Title: Add Individual Lead Type Card Visibility Controls ✅
+# Status: completed
+# Dependencies: 23
+# Priority: high
+# Description: Implement comprehensive visibility controls for individual lead type cards in the analytics dashboard, allowing users to show/hide specific project types.
+
+# Details:
+Enhanced the LeadsByTypeChart component with granular visibility controls similar to the Top Pages and Core Web Vitals sections. Users can now toggle individual lead type cards on/off, providing customized dashboard views focused on their most important project types. This addresses the user's specific request: "that looks good but i cant select ones I want to hide, and have a way to unhide."
+
+# Business Context:
+The laser engraving business tracks 7 different project types: Business Signage & Branding, Corporate Awards & Trophies, Industrial Parts Marking, Promotional Products, Memorial & Commemorative Items, Personalized Gifts & Keepsakes, and Custom Art & Design. Each has different revenue potential and lead quality scores. Users need the ability to focus on specific project types that matter most to their business operations.
+
+# Technical Implementation:
+
+## 1. State Management Enhancement ✅ [completed] 📊
+### Dependencies: None
+### Description: Enhanced cardVisibility state to include 'traffic-leads' section with individual lead type controls.
+### Details:
+Updated the existing cardVisibility state structure to include:
+```javascript
+'traffic-leads': {
+  'leads-by-type': {
+    enabled: true,
+    cards: {
+      'business-signage': true,
+      'awards-trophies': true,
+      'industrial-marking': true,
+      'personalized-gifts': true,
+      'promotional-products': true,
+      'memorial-commemorative': true,
+      'custom-art': true
+    }
+  }
+}
+```
+All lead types default to visible (true) state. State persists via localStorage with automatic save on changes.
+
+## 2. Settings Dropdown Implementation ✅ [completed] ⚙️
+### Dependencies: 24.1
+### Description: Added settings gear icon and dropdown menu with visibility controls.
+### Details:
+Created comprehensive settings dropdown with:
+- **Settings Button**: Gear icon next to "Leads by Project Type" header with hover effects
+- **Dropdown Menu**: 320px wide menu with proper z-index positioning and click-outside detection
+- **Header Section**: "Lead Types Visibility" title with Reset button
+- **Quick Actions**: "Show All" and "Hide All" buttons for bulk operations
+- **Individual Controls**: Toggle switches for each of the 7 lead types with icons and names
+- **Visual Feedback**: Proper active/inactive states and smooth transitions
+
+## 3. Visibility Toggle Functions ✅ [completed] 🔄
+### Dependencies: 24.2
+### Description: Implemented handler functions for individual and bulk visibility operations.
+### Details:
+Created three key functions:
+- `handleToggleLeadVisibility(leadTypeId)`: Toggles individual lead type visibility
+- `handleToggleAllLeads(visible)`: Sets all lead types to visible/hidden state
+- `handleResetLeads()`: Resets all lead types to default visible state
+All functions properly update the cardVisibility state using functional updates to ensure proper React state management.
+
+## 4. Card Filtering Integration ✅ [completed] 🎯
+### Dependencies: 24.3
+### Description: Updated card rendering to respect visibility settings with real-time filtering.
+### Details:
+Modified the drag-and-drop card rendering to check visibility state:
+```javascript
+{leadsCardOrder.map((leadTypeId) => {
+  const isVisible = cardVisibility['traffic-leads']?.['leads-by-type']?.cards?.[leadTypeId] !== false;
+  if (!isVisible) return null;
+  return renderLeadTypeCard(leadTypeId, leads);
+})}
+```
+Cards are filtered in real-time as users toggle visibility settings, with smooth transitions.
+
+## 5. Props Integration and Click Detection ✅ [completed] 🔗
+### Dependencies: 24.4
+### Description: Updated component props passing and event handling for proper integration.
+### Details:
+- Updated LeadsByTypeChart component to receive `cardVisibility` and `setCardVisibility` props
+- Modified renderCardSection function to pass props through to LeadsByTypeChart
+- Added `showLeadsSettings` state with proper useEffect dependency management
+- Implemented click-outside detection with `data-dropdown="leads-settings"` attribute
+- Fixed useEffect dependencies to include showLeadsSettings for proper cleanup
+
+## 6. UI/UX Polish and Code Quality ✅ [completed] ✨
+### Dependencies: 24.5
+### Description: Applied consistent styling and removed ESLint issues for production readiness.
+### Details:
+- Consistent styling matching existing Top Pages and Core Web Vitals visibility controls
+- Proper color coding for lead type icons using projectTypeConfig colors
+- Smooth hover effects and transition animations
+- Removed unused `getQualityColor` function to fix ESLint warnings
+- All toggle switches use consistent styling with lime accent colors
+- Proper accessibility attributes and keyboard navigation support
+
+# Lead Type Configuration:
+The system manages 7 distinct lead types with complete business intelligence:
+
+1. **Business Signage & Branding** (business-signage)
+   - Icon: Building, Color: #3b82f6 (blue)
+   - Avg Value: $400, Lead Quality: 90, Trend: up
+
+2. **Corporate Awards & Trophies** (awards-trophies)
+   - Icon: Trophy, Color: #fbbf24 (amber)
+   - Avg Value: $250, Lead Quality: 85, Trend: up
+
+3. **Industrial Parts Marking** (industrial-marking)
+   - Icon: Package, Color: #10b981 (emerald)
+   - Avg Value: $600, Lead Quality: 95, Trend: stable
+
+4. **Promotional Products** (promotional-products)
+   - Icon: Megaphone, Color: #8b5cf6 (violet)
+   - Avg Value: $200, Lead Quality: 75, Trend: up
+
+5. **Memorial & Commemorative** (memorial-commemorative)
+   - Icon: Heart, Color: #ef4444 (red)
+   - Avg Value: $300, Lead Quality: 70, Trend: stable
+
+6. **Personalized Gifts & Keepsakes** (personalized-gifts)
+   - Icon: Gift, Color: #f59e0b (amber)
+   - Avg Value: $150, Lead Quality: 60, Trend: up
+
+7. **Custom Art & Design** (custom-art)
+   - Icon: Palette, Color: #ec4899 (pink)
+   - Avg Value: $350, Lead Quality: 65, Trend: stable
+
+# User Experience Features:
+- **Instant Feedback**: Cards appear/disappear immediately when toggled
+- **Visual Consistency**: Matches existing dashboard component patterns
+- **Persistent Preferences**: All visibility settings saved to localStorage
+- **Intuitive Controls**: Clear toggle switches with proper on/off states
+- **Bulk Operations**: Quick "Show All" / "Hide All" for efficiency
+- **Reset Functionality**: One-click restore to default settings
+- **Professional Styling**: Consistent with admin dashboard design system
+
+# Testing Instructions:
+1. Navigate to `/admin/analytics` in testing mode
+2. Locate "Leads by Project Type" section
+3. Click the gear icon next to the section title
+4. Test individual toggle switches for each lead type
+5. Verify cards disappear/appear in real-time
+6. Test "Show All" and "Hide All" bulk actions
+7. Test "Reset" functionality
+8. Refresh page and verify settings persist
+9. Ensure dropdown closes when clicking outside
+
+# Files Modified:
+- `src/pages/admin/Analytics.jsx` (main implementation)
+  - Enhanced LeadsByTypeChart component with visibility controls
+  - Added settings dropdown UI components
+  - Implemented toggle handler functions
+  - Updated card filtering logic
+  - Fixed props passing and useEffect dependencies
+  - Removed unused function for ESLint compliance
+
+# Integration Points:
+- Uses existing `cardVisibility` state management pattern
+- Follows Top Pages and Core Web Vitals visibility control design
+- Integrates with existing localStorage persistence system
+- Works with current drag & drop functionality
+- Maintains compatibility with arrange mode features
+
+# ESLint Compliance:
+- Removed unused `getQualityColor` function
+- All variables properly used and referenced
+- No unused imports or declarations
+- Passes `npm run lint` validation
+
+# localStorage Keys:
+- `analytics-card-visibility`: Main visibility state storage
+- `analytics-leads-card-order`: Lead card order persistence
+- Both automatically sync with component state changes
+
+# Performance Considerations:
+- Efficient state updates using functional setState patterns
+- Minimal re-renders through proper dependency management
+- Optimized click detection with event delegation
+- Smooth animations without performance impact
+
+# Future Enhancement Opportunities:
+- Add search/filter within lead types dropdown
+- Implement drag-to-reorder for lead types priority
+- Add lead type grouping or categorization
+- Include revenue-based auto-hide thresholds
+- Add export functionality for visibility preferences
+
+# Branch Information:
+- Current branch: `drag-n-dropdashboard`
+- Build status: ✅ Passing (ESLint clean)
+- Testing mode: Available via TESTING_MODE flag
+- Ready for: Production deployment or further feature development
+
+# Memory Retention Key Points:
+- This task completed user request for lead type visibility controls
+- Implementation follows established dashboard patterns for consistency
+- All 7 laser engraving project types have individual visibility toggles
+- State management uses existing cardVisibility structure for compatibility
+- Ready for immediate user testing and feedback incorporation
+- Lays foundation for additional lead management features
+
+# Completion Status: ✅ FULLY IMPLEMENTED AND TESTED
+All user requirements met. Lead type cards can be individually shown/hidden with persistent settings. UI matches existing dashboard component standards. Code passes all quality checks.

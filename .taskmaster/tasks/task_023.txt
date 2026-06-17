@@ -1,0 +1,51 @@
+# Task ID: 23
+# Title: Add Individual Card Dragging to Performance Summary Section ✅
+# Status: completed
+# Dependencies: 22
+# Priority: high
+# Description: Implement individual card drag & drop functionality for Performance Summary cards to match other dashboard sections.
+# Details:
+Enhanced the Performance Summary section with individual card dragging capabilities. Previously, only section-level dragging was available, but users requested the ability to reorder individual performance metric cards (Mobile Load Time, Desktop Load Time, Uptime, SEO Score) within the section.
+
+# Test Strategy:
+Enable arrange mode via Settings dropdown. Test dragging individual performance cards within the Performance Summary section. Verify blue glow effects and drag handles appear. Confirm order persists after page refresh via localStorage.
+
+# Subtasks:
+## 1. State Management Implementation ✅ [completed] 📊
+### Dependencies: None
+### Description: Add performanceCardOrder state with localStorage persistence for card order tracking.
+### Details:
+Created performanceCardOrder state with default order: ['mobile-load', 'desktop-load', 'uptime', 'seo']. Added localStorage integration to persist card arrangements across page refreshes. Implemented useEffect hook to automatically save order changes to localStorage with key 'analytics-performance-card-order'.
+
+## 2. Drag Handler Function ✅ [completed] 🖱️
+### Dependencies: 23.1
+### Description: Create handlePerformanceDragEnd function for processing drag operations.
+### Details:
+Implemented handlePerformanceDragEnd function following the same pattern as other sections (handleOverviewDragEnd, handleCoreWebVitalsDragEnd). Uses arrayMove utility to reorder cards based on drag operations. Properly handles active/over drag states and updates performanceCardOrder state.
+
+## 3. Card Renderer Component ✅ [completed] 🎨
+### Dependencies: 23.2  
+### Description: Create renderPerformanceMetricCard function with SortableIndividualCard wrapper.
+### Details:
+Built renderPerformanceMetricCard function that maps performance card IDs to their data and wraps each in SortableIndividualCard component. Includes performance status calculation logic and proper icon/metric mapping. Each card gets unique ID for drag operations and proper group assignment for visual feedback.
+
+## 4. Section Rendering Update ✅ [completed] 🔄
+### Dependencies: 23.3
+### Description: Update performance section with nested DndContext and mapped card rendering.
+### Details:
+Replaced static PerformanceMetricCard rendering with dynamic mapped rendering using performanceCardOrder. Added nested DndContext with handlePerformanceDragEnd handler. Implemented SortableContext with rectSortingStrategy for grid-based dragging. Maintained existing visual layout and styling.
+
+## 5. Integration Testing ✅ [completed] ✅
+### Dependencies: 23.4
+### Description: Verify all performance card drag functionality works correctly.
+### Details:
+Tested individual card dragging for all 4 performance metrics. Verified blue glow effects and drag handles appear in arrange mode. Confirmed order persistence across page refreshes. Ensured drag boundaries work correctly (cards stay within Performance Summary section). All functionality matches behavior of other dashboard sections.
+
+# Implementation Notes:
+- Uses @dnd-kit library with nested DndContext pattern
+- Performance cards: Mobile Load Time, Desktop Load Time, Uptime, SEO Score
+- localStorage key: 'analytics-performance-card-order'
+- Group identifier: 'Performance Summary' for visual feedback
+- Files modified: src/pages/admin/Analytics.jsx
+- Branch: drag-n-dropdashboard  
+- Commit: fe60188 - "FEAT: Add individual card dragging to Performance Summary section"

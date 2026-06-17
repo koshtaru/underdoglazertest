@@ -1,0 +1,33 @@
+/* Tailwind CSS 4.x */
+@import "tailwindcss";
+
+/* Reset CSS */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+body {
+  position: relative;
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+}

@@ -1,0 +1,43 @@
+# Task ID: 5
+# Title: Create About Page with Company Story and Interactive Team Cards ✅
+# Status: completed
+# Dependencies: 2
+# Priority: medium
+# Description: Develop the About page with company story, team bios, and interactive cards for each team member.
+# Details:
+Design an About page with a section for company story and a grid of interactive team cards (hover/focus effects, accessible). Use semantic HTML and ARIA labels. Style for dark theme and responsiveness.
+
+# Test Strategy:
+Verify interactivity and accessibility of team cards. Check layout and responsiveness. Validate content structure.
+
+# Subtasks:
+## 1. Set Up About Page Structure with Semantic HTML ✅ [completed]
+### Dependencies: None
+### Description: Create the basic structure of the About page using semantic HTML elements, including sections for the company story and team members.
+### Details:
+Implement a new About page route/component. Use <main>, <section>, <article>, and <header> tags to organize the content. Add placeholder content for the company story and a container for the team cards. Ensure the structure is accessible and ready for further content.
+
+## 2. Implement Company Story Section with Accessible Markup ✅ [completed]
+### Dependencies: 5.1
+### Description: Develop the company story section with accessible, readable content and appropriate ARIA labels where necessary.
+### Details:
+Replace placeholder with real company story content. Use <section> and <p> tags, and include headings (<h2>, <h3>) for structure. Add ARIA labels if needed for enhanced accessibility. Ensure text is easy to read and screen-reader friendly.
+
+## 3. Develop Team Member Card Component with Interactive Effects ✅ [completed]
+### Dependencies: 5.1
+### Description: Create a reusable team member card component featuring hover and focus effects, and ensure accessibility with ARIA attributes.
+### Details:
+Build a card component that displays a team member's photo, name, role, and bio. Add CSS for hover and keyboard focus states (e.g., outline, shadow, or scale). Use ARIA roles/labels for interactive elements. Ensure all interactive features are accessible via keyboard.
+
+## 4. Render Team Cards in Responsive Grid Layout ✅ [completed]
+### Dependencies: 5.3
+### Description: Display all team member cards in a responsive grid layout that adapts to various screen sizes and supports dark theme styling.
+### Details:
+Use CSS Grid or Flexbox to arrange the team cards in a grid. Implement media queries to adjust the number of columns for different devices. Apply dark theme styles (background, text, card colors) using CSS variables or classes. Ensure layout remains accessible and visually appealing.
+
+## 5. Finalize Accessibility and Perform End-to-End Testing ✅ [completed]
+### Dependencies: 5.2, 5.4
+### Description: Review the entire About page for accessibility compliance, polish ARIA labels, and conduct end-to-end testing for usability and responsiveness.
+### Details:
+Audit the page with accessibility tools (e.g., axe, Lighthouse). Ensure all interactive elements are reachable and usable via keyboard. Refine ARIA labels and semantic structure as needed. Test on multiple devices and browsers to confirm consistent behavior.
+

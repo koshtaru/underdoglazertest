@@ -1,0 +1,13 @@
+<svg width="300" height="250" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 250">
+  <defs>
+    <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#34495e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="250" fill="url(#grad5)"/>
+  <circle cx="150" cy="125" r="40" fill="#e63946" opacity="0.6"/>
+  <rect x="120" y="95" width="60" height="60" fill="none" stroke="#f1f1f1" stroke-width="2" rx="10"/>
+  <text x="150" y="200" text-anchor="middle" fill="#f1f1f1" font-family="Arial, sans-serif" font-size="12">Gallery Item 5</text>
+  <text x="150" y="220" text-anchor="middle" fill="#a0a0a0" font-family="Arial, sans-serif" font-size="10">Laser Engraved</text>
+</svg>

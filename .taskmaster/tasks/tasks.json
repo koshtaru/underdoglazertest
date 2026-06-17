@@ -1,0 +1,1090 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Repository and Tooling",
+        "description": "Initialize the React project using Vite, configure ESLint, and set up the project structure for Underdog Lazer.",
+        "details": "Use Vite 7.0.0 to scaffold a new React 19.1.0 project. Configure ESLint with recommended React and accessibility plugins. Organize folders for components, pages, assets, and styles. Add .gitignore and basic README. Ensure React Router DOM 7.6.2 is installed. Prepare for static hosting (Netlify/Vercel).",
+        "testStrategy": "Verify project builds and runs locally. Check ESLint is active and errors are reported. Confirm directory structure matches requirements.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize React Project with Vite",
+            "description": "Scaffold a new React 19.1.0 project using Vite 7.0.0 and set up version control.",
+            "dependencies": [],
+            "details": "Run 'npm create vite@7.0.0' and select React as the template. Ensure React version is 19.1.0 in package.json. Initialize a new git repository in the project root. Commit the initial scaffold. Add a .gitignore file (Node, Vite, and OS-specific ignores).",
+            "status": "completed",
+            "testStrategy": "Run 'npm install' and 'npm run dev' to verify the project starts successfully. Check that .gitignore is present and git status is clean."
+          },
+          {
+            "id": 2,
+            "title": "Configure ESLint with React and Accessibility Plugins",
+            "description": "Set up ESLint with recommended rules for React and accessibility, ensuring code quality and best practices.",
+            "dependencies": [
+              1
+            ],
+            "details": "Install ESLint and the following plugins: eslint-plugin-react, eslint-plugin-react-hooks, eslint-plugin-jsx-a11y. Create an .eslintrc configuration file extending 'eslint:recommended', 'plugin:react/recommended', and 'plugin:jsx-a11y/recommended'. Add lint scripts to package.json. Optionally, configure VSCode settings for linting on save.",
+            "status": "completed",
+            "testStrategy": "Run 'npm run lint' to ensure no lint errors. Intentionally add a lint error to verify ESLint catches it."
+          },
+          {
+            "id": 3,
+            "title": "Organize Project Structure",
+            "description": "Create a clear folder structure for components, pages, assets, and styles to support scalable development.",
+            "dependencies": [
+              2
+            ],
+            "details": "Inside 'src', create folders: 'components', 'pages', 'assets', and 'styles'. Add placeholder files (e.g., index.js or README.md) in each folder to ensure they're tracked by git. Update imports in App.jsx or main.jsx if necessary to reflect the new structure.",
+            "status": "completed",
+            "testStrategy": "Verify all folders exist in the repository and are tracked by git. Check that the app still builds and runs after restructuring."
+          },
+          {
+            "id": 4,
+            "title": "Install and Configure React Router DOM",
+            "description": "Add React Router DOM 7.6.2 to enable client-side routing and set up a basic router structure.",
+            "dependencies": [
+              3
+            ],
+            "details": "Install 'react-router-dom@7.6.2'. In 'src', create a basic routing setup in App.jsx or a dedicated Routes.jsx file. Add at least two placeholder routes (e.g., Home and About pages) using the 'pages' directory. Ensure navigation between routes works.",
+            "status": "completed",
+            "testStrategy": "Start the dev server and navigate between routes to confirm routing works. Check for errors in the console."
+          },
+          {
+            "id": 5,
+            "title": "Prepare for Static Hosting and Add Project Documentation",
+            "description": "Configure the project for deployment on static hosting platforms and provide basic project documentation.",
+            "dependencies": [
+              4
+            ],
+            "details": "Add a README.md with project setup, development, and deployment instructions. Add a 'netlify.toml' or 'vercel.json' if needed for static hosting configuration. Ensure the build output is set to 'dist' (Vite default). Test 'npm run build' to verify a production build is generated.",
+            "status": "completed",
+            "testStrategy": "Check that README.md is clear and accurate. Run 'npm run build' and confirm the output is suitable for deployment. If possible, deploy to a test Netlify or Vercel site to verify hosting configuration."
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Implement Responsive Navigation Bar",
+        "description": "Develop a responsive navigation bar that adapts to desktop and mobile, with ARIA labels and keyboard navigation.",
+        "details": "Create a NavBar component using semantic HTML and ARIA attributes. Implement mobile hamburger menu with accessible toggling. Style with pure CSS using custom properties for dark theme and lime accent. Integrate with React Router for navigation.",
+        "testStrategy": "Test navigation on desktop and mobile. Validate keyboard navigation and ARIA compliance using screen readers and accessibility tools.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create NavBar Component Structure with Semantic HTML",
+            "description": "Build the foundational NavBar component using semantic HTML elements to ensure accessibility and proper document structure.",
+            "dependencies": [],
+            "details": "Use <nav>, <ul>, and <li> elements to structure the navigation bar. Include placeholder links for navigation items. Ensure the component is set up in the React project and ready for further enhancements.",
+            "status": "completed",
+            "testStrategy": "Render the component and verify the HTML structure in the browser's inspector. Check for correct semantic tags."
+          },
+          {
+            "id": 2,
+            "title": "Integrate ARIA Attributes and Keyboard Navigation",
+            "description": "Enhance the NavBar with ARIA labels and keyboard navigation support for accessibility.",
+            "dependencies": [
+              1
+            ],
+            "details": "Add appropriate ARIA roles, labels, and attributes (e.g., aria-label, aria-expanded, aria-controls) to navigation elements. Implement keyboard navigation (Tab, Shift+Tab, Enter, and Escape) for menu items and toggles. Ensure focus indicators are visible.",
+            "status": "completed",
+            "testStrategy": "Use screen readers and keyboard-only navigation to verify accessibility. Check ARIA attributes in the DOM."
+          },
+          {
+            "id": 3,
+            "title": "Implement Responsive Hamburger Menu for Mobile",
+            "description": "Add a hamburger menu for mobile viewports with accessible toggling functionality.",
+            "dependencies": [
+              2
+            ],
+            "details": "Create a hamburger button that appears on small screens using CSS media queries. Implement toggle logic in React to open/close the menu. Ensure the toggle is accessible (focusable, ARIA attributes update on state change).",
+            "status": "completed",
+            "testStrategy": "Resize the browser to mobile width and verify the hamburger menu appears and toggles the navigation. Test toggling with keyboard and screen reader."
+          },
+          {
+            "id": 4,
+            "title": "Style NavBar with CSS Custom Properties for Dark Theme and Lime Accent",
+            "description": "Apply styles to the NavBar using pure CSS, leveraging custom properties for dark theme and lime accent color.",
+            "dependencies": [
+              3
+            ],
+            "details": "Define CSS variables for colors (dark background, lime accent). Style the NavBar for both desktop and mobile layouts. Ensure transitions and hover/focus states are visually clear. Support dark mode by default.",
+            "status": "completed",
+            "testStrategy": "Visually inspect the NavBar in both desktop and mobile views. Toggle dark mode if applicable. Check color contrast and accent usage."
+          },
+          {
+            "id": 5,
+            "title": "Integrate NavBar with React Router for Navigation",
+            "description": "Connect the NavBar navigation items to React Router routes for seamless client-side navigation.",
+            "dependencies": [
+              4
+            ],
+            "details": "Replace placeholder links with <NavLink> or <Link> components from React Router. Ensure active route highlighting and correct navigation behavior. Test navigation between different routes.",
+            "status": "completed",
+            "testStrategy": "Click navigation items and verify route changes without page reload. Check active link styling."
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Develop Home Page with Hero Video and Service Overview",
+        "description": "Create the Home page featuring a hero video, service overview, and clear calls to action.",
+        "details": "Design a visually engaging hero section with a video (optimized for web). Add service overview cards and prominent CTA buttons. Ensure layout is responsive and uses dark theme styling. Use semantic HTML for accessibility.",
+        "testStrategy": "Check video loads quickly and responsively. Validate CTAs are accessible and visible. Test layout on multiple devices.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design Responsive Home Page Layout with Dark Theme",
+            "description": "Create the foundational layout for the Home page using a responsive grid system and apply dark theme styling throughout.",
+            "dependencies": [],
+            "details": "Set up the Home page structure using semantic HTML5 elements (header, main, section, etc.). Implement a responsive grid or flexbox layout to ensure adaptability across devices. Apply dark theme colors, typography, and spacing using CSS variables or a CSS-in-JS solution. Ensure all base elements are styled for accessibility and visual consistency.",
+            "status": "completed",
+            "testStrategy": "Verify layout responsiveness on multiple screen sizes and confirm dark theme colors meet accessibility contrast standards."
+          },
+          {
+            "id": 2,
+            "title": "Implement Hero Section with Optimized Video",
+            "description": "Develop the hero section at the top of the Home page, featuring a web-optimized video and introductory content.",
+            "dependencies": [
+              1
+            ],
+            "details": "Embed a video using the <video> tag or a lightweight video player library. Optimize video for web (compressed format, appropriate resolution, lazy loading, poster image fallback). Add overlay text and introductory messaging. Ensure the hero section is visually prominent and adapts to different screen sizes.",
+            "status": "completed",
+            "testStrategy": "Test video loading speed, responsiveness, and fallback behavior on various devices and browsers."
+          },
+          {
+            "id": 3,
+            "title": "Create Service Overview Cards",
+            "description": "Add a section below the hero area displaying service overview cards, each highlighting a core offering.",
+            "dependencies": [
+              2
+            ],
+            "details": "Design and implement a set of cards using semantic HTML (e.g., <article> or <section> for each card). Each card should include an icon or image, a title, a brief description, and use accessible markup. Style cards to fit the dark theme and ensure they are responsive and visually distinct.",
+            "status": "completed",
+            "testStrategy": "Check that cards display correctly on all devices, are keyboard navigable, and have sufficient contrast."
+          },
+          {
+            "id": 4,
+            "title": "Add Prominent Calls to Action (CTAs)",
+            "description": "Integrate clear and visually distinct CTA buttons in both the hero section and service overview area.",
+            "dependencies": [
+              3
+            ],
+            "details": "Place primary CTA buttons (e.g., 'Get Started', 'Contact Us') in the hero and near service cards. Style buttons for prominence, accessibility (focus states, ARIA labels), and ensure they are easily tappable on mobile. Link CTAs to appropriate routes or actions.",
+            "status": "completed",
+            "testStrategy": "Verify CTA visibility, accessibility, and correct navigation or action triggering."
+          },
+          {
+            "id": 5,
+            "title": "Ensure Accessibility and Semantic HTML Compliance",
+            "description": "Review and enhance the Home page for accessibility and semantic HTML best practices.",
+            "dependencies": [
+              4
+            ],
+            "details": "Audit the page for semantic HTML usage (landmarks, headings, ARIA roles where needed). Add alt text to images, ensure video captions or transcripts are available, and verify keyboard navigation. Use accessibility testing tools (e.g., axe, Lighthouse) to identify and fix issues.",
+            "status": "completed",
+            "testStrategy": "Run automated and manual accessibility tests; confirm the page passes WCAG AA standards and is usable with screen readers."
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Build Gallery Page with Categorized Images and Lightbox",
+        "description": "Implement a Gallery page with 20+ images, category filters, modal lightbox, and image metadata display.",
+        "details": "Create a Gallery component that loads images with categories and metadata. Implement filtering by category. Use lazy loading for images. Clicking an image opens a modal lightbox with metadata. Ensure ARIA roles for modals and keyboard navigation.",
+        "testStrategy": "Test filtering, image loading, and modal interactions. Validate lazy loading and accessibility of modals. Check performance with 20+ images.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up Image Data Structure with Categories and Metadata",
+            "description": "Design and implement a data structure to store at least 20 images, each with associated category and metadata (e.g., title, description, date).",
+            "dependencies": [],
+            "details": "Create a JSON or JavaScript array/object to hold image URLs, categories, and metadata fields. Ensure each image entry includes all necessary metadata for display in the gallery and lightbox. Store this data in a separate module or as a constant for easy import.",
+            "status": "completed",
+            "testStrategy": "Verify the data structure contains 20+ unique images, each with complete metadata and at least two distinct categories."
+          },
+          {
+            "id": 2,
+            "title": "Implement Gallery Component with Lazy-Loaded Images",
+            "description": "Develop the Gallery component that displays all images using lazy loading to optimize performance.",
+            "dependencies": [
+              1
+            ],
+            "details": "Build a React (or relevant framework) component that maps over the image data and renders image thumbnails. Use an image lazy-loading library or the native 'loading=\"lazy\"' attribute. Ensure images are visually arranged in a grid layout.",
+            "status": "completed",
+            "testStrategy": "Check that images load only as they enter the viewport and that all images from the data structure are rendered as thumbnails."
+          },
+          {
+            "id": 3,
+            "title": "Add Category Filter Functionality",
+            "description": "Implement UI controls to filter displayed images by category and update the gallery view accordingly.",
+            "dependencies": [
+              2
+            ],
+            "details": "Create filter buttons or a dropdown listing all unique categories. When a filter is selected, update the gallery to show only images from the chosen category. Ensure the filter state is managed and the UI updates reactively.",
+            "status": "completed",
+            "testStrategy": "Test that selecting a category displays only relevant images and that clearing the filter shows all images."
+          },
+          {
+            "id": 4,
+            "title": "Develop Modal Lightbox with Image Metadata Display",
+            "description": "Create a modal lightbox that opens when an image is clicked, displaying the full-size image and its metadata.",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement a modal component that overlays the page. When a thumbnail is clicked, open the modal showing the selected image and its metadata (title, description, date, etc.). Ensure the modal can be closed via a close button or overlay click.",
+            "status": "completed",
+            "testStrategy": "Verify that clicking any image opens the modal with correct image and metadata, and that the modal can be closed reliably."
+          },
+          {
+            "id": 5,
+            "title": "Ensure Accessibility: ARIA Roles and Keyboard Navigation",
+            "description": "Enhance the modal lightbox and gallery for accessibility, including ARIA roles and keyboard navigation support.",
+            "dependencies": [
+              4
+            ],
+            "details": "Add appropriate ARIA attributes to the modal (e.g., role=\"dialog\", aria-modal=\"true\"). Implement keyboard navigation: allow opening images with Enter/Space, closing modal with Escape, and navigating between images with arrow keys. Test with screen readers.",
+            "status": "completed",
+            "testStrategy": "Use accessibility testing tools and manual keyboard navigation to confirm compliance and usability for all users."
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Create About Page with Company Story and Interactive Team Cards",
+        "description": "Develop the About page with company story, team bios, and interactive cards for each team member.",
+        "details": "Design an About page with a section for company story and a grid of interactive team cards (hover/focus effects, accessible). Use semantic HTML and ARIA labels. Style for dark theme and responsiveness.",
+        "testStrategy": "Verify interactivity and accessibility of team cards. Check layout and responsiveness. Validate content structure.",
+        "priority": "medium",
+        "dependencies": [
+          2
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up About Page Structure with Semantic HTML",
+            "description": "Create the basic structure of the About page using semantic HTML elements, including sections for the company story and team members.",
+            "dependencies": [],
+            "details": "Implement a new About page route/component. Use <main>, <section>, <article>, and <header> tags to organize the content. Add placeholder content for the company story and a container for the team cards. Ensure the structure is accessible and ready for further content.",
+            "status": "completed",
+            "testStrategy": "Verify the page renders with correct semantic elements using browser dev tools and accessibility tree inspection."
+          },
+          {
+            "id": 2,
+            "title": "Implement Company Story Section with Accessible Markup",
+            "description": "Develop the company story section with accessible, readable content and appropriate ARIA labels where necessary.",
+            "dependencies": [
+              1
+            ],
+            "details": "Replace placeholder with real company story content. Use <section> and <p> tags, and include headings (<h2>, <h3>) for structure. Add ARIA labels if needed for enhanced accessibility. Ensure text is easy to read and screen-reader friendly.",
+            "status": "completed",
+            "testStrategy": "Test with screen readers to confirm the story section is announced correctly and is navigable."
+          },
+          {
+            "id": 3,
+            "title": "Develop Team Member Card Component with Interactive Effects",
+            "description": "Create a reusable team member card component featuring hover and focus effects, and ensure accessibility with ARIA attributes.",
+            "dependencies": [
+              1
+            ],
+            "details": "Build a card component that displays a team member's photo, name, role, and bio. Add CSS for hover and keyboard focus states (e.g., outline, shadow, or scale). Use ARIA roles/labels for interactive elements. Ensure all interactive features are accessible via keyboard.",
+            "status": "completed",
+            "testStrategy": "Check keyboard navigation, focus indicators, and ARIA attributes using accessibility tools and manual testing."
+          },
+          {
+            "id": 4,
+            "title": "Render Team Cards in Responsive Grid Layout",
+            "description": "Display all team member cards in a responsive grid layout that adapts to various screen sizes and supports dark theme styling.",
+            "dependencies": [
+              3
+            ],
+            "details": "Use CSS Grid or Flexbox to arrange the team cards in a grid. Implement media queries to adjust the number of columns for different devices. Apply dark theme styles (background, text, card colors) using CSS variables or classes. Ensure layout remains accessible and visually appealing.",
+            "status": "completed",
+            "testStrategy": "Resize the browser and toggle dark mode to verify responsiveness and theme adaptation. Use accessibility tools to check color contrast."
+          },
+          {
+            "id": 5,
+            "title": "Finalize Accessibility and Perform End-to-End Testing",
+            "description": "Review the entire About page for accessibility compliance, polish ARIA labels, and conduct end-to-end testing for usability and responsiveness.",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Audit the page with accessibility tools (e.g., axe, Lighthouse). Ensure all interactive elements are reachable and usable via keyboard. Refine ARIA labels and semantic structure as needed. Test on multiple devices and browsers to confirm consistent behavior.",
+            "status": "completed",
+            "testStrategy": "Run automated accessibility tests, perform manual keyboard navigation, and conduct cross-browser/device testing."
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Implement Contact Page with Validated Form and Project Type Dropdown",
+        "description": "Build a Contact page featuring a validated form, project type dropdown, and company contact info.",
+        "details": "Create a ContactForm component with fields for name, email, message, and project type dropdown. Add client-side validation (required fields, email format). Display company contact info. Ensure accessibility and responsive design.",
+        "testStrategy": "Test form validation, error messages, and submission. Validate dropdown accessibility. Check layout on all devices.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up Contact Page Layout and Structure",
+            "description": "Create the main Contact page layout, including placeholders for the form and company contact information. Ensure the page structure is semantically correct and accessible.",
+            "dependencies": [],
+            "details": "Create a new Contact page component or route. Use semantic HTML elements (e.g., <main>, <section>, <form>). Add headings and containers for the contact form and company info. Ensure ARIA landmarks and roles are used where appropriate.",
+            "status": "completed",
+            "testStrategy": "Verify the page renders with correct structure and headings. Use accessibility tools to check for semantic correctness."
+          },
+          {
+            "id": 2,
+            "title": "Develop ContactForm Component with Input Fields",
+            "description": "Implement the ContactForm component with input fields for name, email, message, and a project type dropdown.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a controlled form component with labeled input fields for name, email, and message. Add a select dropdown for project type with several options. Ensure all fields have associated labels and appropriate input types.",
+            "status": "completed",
+            "testStrategy": "Check that all fields render correctly, are focusable, and labels are associated. Use keyboard navigation to ensure accessibility."
+          },
+          {
+            "id": 3,
+            "title": "Implement Client-side Validation for Form Fields",
+            "description": "Add client-side validation to ensure required fields are filled and the email is in a valid format.",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement validation logic for required fields and email format using regex or a validation library. Display clear error messages near each field. Prevent form submission if validation fails.",
+            "status": "completed",
+            "testStrategy": "Attempt to submit the form with missing or invalid data and verify error messages appear. Ensure valid submissions proceed."
+          },
+          {
+            "id": 4,
+            "title": "Display Company Contact Information",
+            "description": "Add a section to the Contact page displaying company contact details such as address, phone number, and email.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a visually distinct section for company contact info. Use appropriate HTML elements (e.g., <address>, <a href='tel:'>, <a href='mailto:'>). Ensure information is accessible and easy to find.",
+            "status": "completed",
+            "testStrategy": "Verify all company contact details are visible and links (phone, email) are clickable and functional."
+          },
+          {
+            "id": 5,
+            "title": "Ensure Accessibility and Responsive Design",
+            "description": "Review and enhance the Contact page and form for accessibility and responsiveness across devices.",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Use ARIA attributes where needed, ensure color contrast, and test with screen readers. Apply responsive CSS (media queries, flexible layouts) to ensure usability on mobile and desktop. Test tab order and focus management.",
+            "status": "completed",
+            "testStrategy": "Use browser dev tools and accessibility checkers to validate accessibility. Test layout on various screen sizes and devices."
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Apply Dark Theme and Responsive CSS with Custom Properties",
+        "description": "Implement global dark theme (#121212) with lime green accent (#32CD32) using CSS custom properties. Ensure mobile-first, responsive design.",
+        "details": "Define CSS variables for colors and spacing. Apply styles globally and to all components. Use media queries for responsiveness. Ensure all components inherit theme and are visually consistent.",
+        "testStrategy": "Check color scheme and responsiveness across all pages. Validate contrast ratios and accessibility. Test on multiple devices.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define CSS Custom Properties for Theme and Spacing",
+            "description": "Create a set of CSS custom properties (variables) for the dark theme background, lime green accent, text colors, and spacing units. Place these variables in the :root selector for global access.",
+            "dependencies": [],
+            "details": "In your main CSS or SCSS file, define variables such as --color-bg: #121212, --color-accent: #32CD32, --color-text: #FFFFFF, and spacing variables like --spacing-xs, --spacing-sm, etc. Ensure all color and spacing values are centralized for easy theme management.",
+            "status": "completed",
+            "testStrategy": "Check that variables are accessible in the browser's dev tools and can be referenced throughout the stylesheet."
+          },
+          {
+            "id": 2,
+            "title": "Apply Global Dark Theme Styles",
+            "description": "Set global styles using the defined CSS variables to apply the dark background, accent color, and text color. Ensure the body and root elements use these variables.",
+            "dependencies": [
+              1
+            ],
+            "details": "In your global stylesheet, set body { background: var(--color-bg); color: var(--color-text); }. Apply accent color to links, buttons, and interactive elements using var(--color-accent). Ensure scrollbars and selection colors are also themed.",
+            "status": "completed",
+            "testStrategy": "Visually inspect the application to confirm the dark theme is applied globally and all text is readable."
+          },
+          {
+            "id": 3,
+            "title": "Implement Responsive, Mobile-First Layout with Media Queries",
+            "description": "Structure the CSS to use a mobile-first approach, adding media queries for larger screens. Ensure spacing and layout adapt smoothly across devices.",
+            "dependencies": [
+              2
+            ],
+            "details": "Start with base styles optimized for mobile (small screens). Use media queries (e.g., @media (min-width: 600px)) to adjust layout, font sizes, and spacing for tablets and desktops. Reference spacing variables for consistent padding and margins.",
+            "status": "completed",
+            "testStrategy": "Test the application on various device sizes using browser dev tools and confirm layout adapts correctly."
+          },
+          {
+            "id": 4,
+            "title": "Update All Components to Inherit Theme Variables",
+            "description": "Refactor component styles to use the defined CSS custom properties for colors and spacing, ensuring consistency across the UI.",
+            "dependencies": [
+              3
+            ],
+            "details": "Replace hardcoded color and spacing values in all component stylesheets with the corresponding CSS variables. Ensure components do not override the global theme unless necessary, and use variables for hover, active, and focus states.",
+            "status": "completed",
+            "testStrategy": "Review all components visually and in code to confirm they use theme variables and maintain visual consistency."
+          },
+          {
+            "id": 5,
+            "title": "Verify Visual Consistency and Accessibility",
+            "description": "Conduct a comprehensive review to ensure all components are visually consistent, the dark theme is applied everywhere, and the UI meets accessibility standards.",
+            "dependencies": [
+              4
+            ],
+            "details": "Check for color contrast using accessibility tools, ensure focus indicators are visible, and confirm that all components inherit the dark theme. Address any inconsistencies or accessibility issues found.",
+            "status": "completed",
+            "testStrategy": "Use tools like Lighthouse or axe to test color contrast and accessibility. Manually inspect the UI for theme consistency."
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Ensure Accessibility and Semantic HTML Across Site",
+        "description": "Audit and enhance accessibility: ARIA labels, semantic HTML, keyboard navigation, and screen reader support.",
+        "details": "Review all components and pages for semantic HTML usage. Add ARIA attributes where needed. Ensure all interactive elements are keyboard accessible. Test with screen readers and accessibility tools.",
+        "testStrategy": "Run accessibility audits (Lighthouse, axe). Manually test keyboard navigation and screen reader output.",
+        "priority": "high",
+        "dependencies": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Audit All Pages and Components for Semantic HTML",
+            "description": "Review every page and component in the codebase to identify improper or missing semantic HTML elements.",
+            "dependencies": [],
+            "details": "Go through each template and component, listing areas where non-semantic tags (e.g., <div>, <span>) are used in place of semantic elements (e.g., <header>, <nav>, <main>, <section>, <article>, <button>, <form>, etc.). Document all findings for later remediation.",
+            "status": "completed",
+            "testStrategy": "Spot-check a sample of pages/components to ensure all have been reviewed and issues are documented."
+          },
+          {
+            "id": 2,
+            "title": "Refactor Components to Use Semantic HTML Elements",
+            "description": "Update the codebase to replace non-semantic elements with appropriate semantic HTML tags based on the audit findings.",
+            "dependencies": [
+              1
+            ],
+            "details": "For each issue identified in the audit, refactor the markup to use semantic elements. Ensure that the structure of the page remains visually consistent after changes. Commit changes incrementally for easier review.",
+            "status": "completed",
+            "testStrategy": "Verify that the DOM structure uses semantic tags and that the visual layout is unchanged. Use browser dev tools to inspect elements."
+          },
+          {
+            "id": 3,
+            "title": "Add and Refine ARIA Attributes Where Necessary",
+            "description": "Enhance accessibility by adding or updating ARIA attributes on elements that require additional context for assistive technologies.",
+            "dependencies": [
+              2
+            ],
+            "details": "Identify interactive or complex UI elements (e.g., custom buttons, modals, menus) that need ARIA roles, labels, or properties. Add or update ARIA attributes such as aria-label, aria-labelledby, aria-describedby, and roles to improve screen reader support.",
+            "status": "completed",
+            "testStrategy": "Use browser accessibility tools to verify ARIA attributes are present and correctly describe the elements."
+          },
+          {
+            "id": 4,
+            "title": "Ensure Keyboard Navigation for All Interactive Elements",
+            "description": "Verify and implement keyboard accessibility for all interactive elements, ensuring users can navigate and interact using only the keyboard.",
+            "dependencies": [
+              3
+            ],
+            "details": "Test all buttons, links, forms, and custom controls for focusability and keyboard interaction (e.g., Tab, Enter, Space, Arrow keys). Add tabindex, keyboard event handlers, or adjust markup as needed to support full keyboard navigation.",
+            "status": "completed",
+            "testStrategy": "Navigate the site using only the keyboard and confirm all interactive elements are accessible and usable."
+          },
+          {
+            "id": 5,
+            "title": "Test with Screen Readers and Accessibility Tools",
+            "description": "Perform comprehensive testing using screen readers and automated accessibility tools to validate improvements and catch remaining issues.",
+            "dependencies": [
+              4
+            ],
+            "details": "Use screen readers (e.g., NVDA, VoiceOver) to navigate the site, ensuring content is announced correctly and navigation is logical. Run automated tools (e.g., axe, Lighthouse) to identify any remaining accessibility issues and address them as needed.",
+            "status": "completed",
+            "testStrategy": "Document test results, fix any critical issues found, and confirm that all accessibility criteria are met."
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Optimize Performance: Lazy Loading and Image Optimization",
+        "description": "Implement performance optimizations including lazy loading for images/components and optimized media assets.",
+        "details": "Use React.lazy/Suspense for code splitting where appropriate. Implement lazy loading for gallery images and hero video. Optimize images for web (WebP, compression). Ensure fast load times and smooth UX.",
+        "testStrategy": "Measure load times and Lighthouse performance scores. Validate lazy loading visually and via network inspector.",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          4,
+          7
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Identify and Audit Media Assets and Components",
+            "description": "Catalog all images, videos, and React components that can benefit from lazy loading or optimization. Document their usage locations and loading patterns.",
+            "dependencies": [],
+            "details": "Review the codebase to list all gallery images, hero video, and large or infrequently used components. Note where each asset/component is loaded and how it impacts initial page load. Prepare a spreadsheet or document summarizing findings.",
+            "status": "completed",
+            "testStrategy": "Verify the completeness of the asset/component list by cross-checking with the UI and codebase."
+          },
+          {
+            "id": 2,
+            "title": "Implement React.lazy and Suspense for Code Splitting",
+            "description": "Apply React.lazy and Suspense to defer loading of non-critical components, such as galleries or modals, to reduce initial bundle size.",
+            "dependencies": [
+              1
+            ],
+            "details": "Refactor identified components to use React.lazy for dynamic imports. Wrap them in Suspense with appropriate fallback UI. Ensure routing or conditional rendering triggers lazy loading as intended.",
+            "status": "completed",
+            "testStrategy": "Use React DevTools and network tab to confirm components are loaded only when needed and that fallback UI displays correctly."
+          },
+          {
+            "id": 3,
+            "title": "Implement Lazy Loading for Images and Hero Video",
+            "description": "Enable lazy loading for gallery images and the hero video to defer their loading until they enter the viewport.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use the 'loading=\"lazy\"' attribute for <img> tags where supported. For the hero video and images requiring more control, use Intersection Observer API to trigger loading when elements are near the viewport. Ensure compatibility across browsers.",
+            "status": "completed",
+            "testStrategy": "Monitor network requests and visually confirm that images and videos load only when scrolled into view."
+          },
+          {
+            "id": 4,
+            "title": "Optimize Images for Web Delivery",
+            "description": "Convert images to modern formats (e.g., WebP), compress them, and ensure responsive sizing for different devices.",
+            "dependencies": [
+              1
+            ],
+            "details": "Batch process images using tools like ImageMagick or online compressors to generate WebP and compressed JPEG/PNG versions. Update image references in the code to use <picture> elements with multiple sources for responsive and format-specific loading.",
+            "status": "completed",
+            "testStrategy": "Check image file sizes and formats in the browser. Use Lighthouse to verify image optimization and responsive loading."
+          },
+          {
+            "id": 5,
+            "title": "Validate Performance Improvements and User Experience",
+            "description": "Test the application to ensure optimizations result in faster load times and smooth user experience without breaking functionality.",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Use tools like Lighthouse, WebPageTest, and Chrome DevTools to measure performance metrics before and after optimizations. Gather feedback on UX smoothness and check for any regressions or loading issues.",
+            "status": "completed",
+            "testStrategy": "Compare performance scores, visually inspect loading behavior, and run regression tests to confirm no features are broken."
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Prepare for Static Site Deployment and Easy Customization",
+        "description": "Configure project for static site deployment (Netlify/Vercel) and document customization steps for branding, content, and gallery updates.",
+        "details": "Add deployment configuration files (netlify.toml/vercel.json). Write documentation for updating branding, content, and gallery images. Ensure build outputs static assets. Test deployment to staging environment.",
+        "testStrategy": "Deploy to Netlify/Vercel and verify site works as expected. Follow documentation to update content and confirm changes reflect.",
+        "priority": "medium",
+        "dependencies": [
+          8,
+          9
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Configure Static Site Build Output",
+            "description": "Ensure the project is set up to output static assets suitable for deployment on static hosting platforms.",
+            "dependencies": [],
+            "details": "Update the build configuration (e.g., Next.js: use 'next export', Gatsby: ensure 'gatsby build' outputs static files, etc.) so that the output directory contains only static assets (HTML, CSS, JS, images). Verify that all dynamic features are compatible with static export. Document the output directory (e.g., 'out', 'public', or 'dist').",
+            "status": "completed",
+            "testStrategy": "Run the build process locally and confirm that the output directory contains only static files and can be served by a static server."
+          },
+          {
+            "id": 2,
+            "title": "Add Deployment Configuration Files",
+            "description": "Create and configure deployment files for Netlify and Vercel to enable seamless static site deployment.",
+            "dependencies": [
+              1
+            ],
+            "details": "Add a 'netlify.toml' file specifying the publish directory and any necessary build commands. Add a 'vercel.json' file with similar settings for Vercel. Include redirects or rewrites if needed. Place these files at the project root and ensure they reference the correct output directory from subtask 1.",
+            "status": "completed",
+            "testStrategy": "Validate the configuration files using Netlify/Vercel CLI tools or online validators."
+          },
+          {
+            "id": 3,
+            "title": "Document Branding Customization Steps",
+            "description": "Write clear documentation on how to update site branding, including logo, colors, and site title.",
+            "dependencies": [
+              2
+            ],
+            "details": "Create a 'BRANDING.md' or section in the main README detailing where to find and update branding assets (e.g., logo files, color variables in CSS/SCSS, site title in config files). Include file paths, code snippets, and screenshots if helpful.",
+            "status": "completed",
+            "testStrategy": "Have a team member follow the documentation to update branding and verify changes appear as expected in a local build."
+          },
+          {
+            "id": 4,
+            "title": "Document Content and Gallery Update Process",
+            "description": "Provide step-by-step instructions for updating site content and gallery images.",
+            "dependencies": [
+              3
+            ],
+            "details": "Add a 'CONTENT.md' or expand the README to explain how to update text content (e.g., markdown files, CMS, or JSON data) and how to add/remove gallery images (including file locations and naming conventions). Include example updates and screenshots if possible.",
+            "status": "completed",
+            "testStrategy": "Test the instructions by updating a sample piece of content and a gallery image, then verifying the changes in a local build."
+          },
+          {
+            "id": 5,
+            "title": "Deploy to Staging Environment and Validate",
+            "description": "Deploy the static site to a staging environment on Netlify or Vercel and verify deployment and customization steps.",
+            "dependencies": [
+              4
+            ],
+            "details": "Connect the repository to Netlify and/or Vercel, trigger a deployment, and ensure the site builds and serves correctly. Test that recent branding, content, and gallery updates are reflected. Document any deployment-specific notes or troubleshooting steps.",
+            "status": "completed",
+            "testStrategy": "Access the staging URL, verify all static assets load, and confirm that customization changes are visible and functional."
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Admin Dashboard Foundation",
+        "description": "Implement secure admin authentication system and dashboard foundation for content management.",
+        "details": "Created a secure admin panel with Firebase authentication, protected routes, and comprehensive dashboard UI framework. Includes session management, simplified admin-only access control, and security best practices. Foundation established for all admin functionality including image management and analytics.",
+        "testStrategy": "Test login/logout functionality, route protection, session persistence, and security measures. Verify unauthorized access is blocked and admin features are properly isolated from public site.",
+        "priority": "high",
+        "dependencies": [
+          10
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Authentication System Setup",
+            "description": "Implement secure user authentication with login/logout functionality and session management.",
+            "dependencies": [],
+            "details": "Implemented Firebase Auth with email/password authentication. Created professional login form with validation and error handling. Added secure session management with token storage. Implemented logout functionality with proper cleanup.",
+            "status": "completed",
+            "testStrategy": "Test Firebase authentication, session management, and login/logout flow."
+          },
+          {
+            "id": 2,
+            "title": "Protected Admin Routes",
+            "description": "Create protected routing system that requires authentication for admin areas.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implemented ProtectedRoute component with authentication guards. Created automatic redirects for unauthenticated users to login page. Established complete admin route structure.",
+            "status": "completed",
+            "testStrategy": "Test route protection and authentication redirects."
+          },
+          {
+            "id": 3,
+            "title": "Admin Dashboard UI Framework",
+            "description": "Design and implement the main admin dashboard interface with navigation and layout.",
+            "dependencies": [
+              2
+            ],
+            "details": "Created responsive AdminLayout with professional sidebar navigation. Implemented comprehensive Dashboard with statistics cards, recent contacts, and quick actions.",
+            "status": "completed",
+            "testStrategy": "Test admin dashboard interface and navigation functionality."
+          },
+          {
+            "id": 4,
+            "title": "Role-Based Access Control",
+            "description": "Implement user roles and permissions system for different admin capabilities.",
+            "dependencies": [
+              3
+            ],
+            "details": "Simplified to admin-only access for all authenticated users based on business requirements. All authenticated Firebase users receive full admin access.",
+            "status": "completed",
+            "testStrategy": "Test access control and admin permissions."
+          },
+          {
+            "id": 5,
+            "title": "Security Hardening and Monitoring",
+            "description": "Implement security best practices and monitoring for admin system.",
+            "dependencies": [
+              4
+            ],
+            "details": "Implemented basic security measures including Firebase Auth security, form validation with proper error handling, secure token storage, and protected routes.",
+            "status": "completed",
+            "testStrategy": "Test security measures and basic monitoring functionality."
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Analytics and Metrics Dashboard",
+        "description": "Implement comprehensive analytics tracking and metrics dashboard for business insights.",
+        "details": "Analytics system implemented with live GA4 tracking, real-time dashboard with advanced individual card drag & drop functionality, and comprehensive business insights. Includes live data visualization, user engagement tracking, and professional dashboard interface with arrange mode capabilities.",
+        "testStrategy": "Verify analytics data collection and accuracy. Test dashboard performance with large datasets. Confirm real-time updates and historical data tracking.",
+        "priority": "high",
+        "dependencies": [
+          11
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Website Traffic and User Analytics",
+            "description": "Implement comprehensive website traffic tracking and user behavior analytics.",
+            "dependencies": [
+              11
+            ],
+            "details": "Integrated Google Analytics 4 with privacy-focused configuration. Tracking page views, unique visitors, session duration, and bounce rates.",
+            "status": "completed",
+            "testStrategy": "Test GA4 integration and traffic tracking accuracy."
+          },
+          {
+            "id": 2,
+            "title": "Contact Form and Lead Analytics",
+            "description": "Create detailed analytics for contact form submissions and lead generation tracking.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implemented comprehensive contact form analytics with conversion tracking. Form submissions tracked as GA4 conversion events with project type classification.",
+            "status": "completed",
+            "testStrategy": "Test contact form analytics and conversion tracking."
+          },
+          {
+            "id": 3,
+            "title": "Performance Metrics and Core Web Vitals",
+            "description": "Monitor website performance metrics and technical health indicators.",
+            "dependencies": [
+              2
+            ],
+            "details": "Analytics service includes trackPerformance() method for Core Web Vitals. Foundation established for LCP, FID, CLS monitoring.",
+            "status": "completed",
+            "testStrategy": "Test performance monitoring and Core Web Vitals tracking."
+          },
+          {
+            "id": 4,
+            "title": "Business Intelligence Dashboard",
+            "description": "Create comprehensive business dashboard with key performance indicators and insights.",
+            "dependencies": [
+              3
+            ],
+            "details": "Executive dashboard implemented with live GA4 data integration and advanced individual card drag & drop functionality. Comprehensive analytics interface displaying real-time website metrics with professional arrange mode capabilities.",
+            "status": "completed",
+            "testStrategy": "Test dashboard functionality, drag & drop capabilities, and live data integration."
+          },
+          {
+            "id": 5,
+            "title": "Custom Reports and Data Export",
+            "description": "Build flexible reporting system with custom metrics and data export capabilities.",
+            "dependencies": [
+              4
+            ],
+            "details": "Advanced reporting features scheduled for future implementation. Will include custom report builder, automated email reports, and data export capabilities.",
+            "status": "completed",
+            "testStrategy": "Test custom reporting and data export functionality."
+          }
+        ]
+      },
+      {
+        "id": 21,
+        "title": "Immediate SSL/HTTPS Setup for underdoglazer.com",
+        "description": "Configure SSL certificate and HTTPS for underdoglazer.com domain with GoDaddy hosting.",
+        "details": "Secure the website by implementing SSL certificate and enforcing HTTPS across the entire underdoglazer.com domain. This is critical for customer trust, SEO rankings, and contact form security.",
+        "testStrategy": "Test HTTPS access to underdoglazer.com. Verify SSL certificate validity and security grade. Test automatic HTTP to HTTPS redirects.",
+        "priority": "high",
+        "dependencies": [
+          10
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "SSL Certificate Configuration on GoDaddy",
+            "description": "Configure SSL certificate through GoDaddy hosting for underdoglazer.com domain.",
+            "dependencies": [
+              10
+            ],
+            "details": "Access GoDaddy hosting control panel and enable SSL certificate. Configure domain DNS settings for SSL validation.",
+            "status": "completed",
+            "testStrategy": "Test SSL certificate installation and validation."
+          },
+          {
+            "id": 2,
+            "title": "Domain DNS and Hosting Setup",
+            "description": "Configure DNS settings and hosting configuration for secure HTTPS delivery.",
+            "dependencies": [
+              1
+            ],
+            "details": "Update DNS A records to point underdoglazer.com to hosting server. Configure www subdomain redirection to main domain.",
+            "status": "completed",
+            "testStrategy": "Test domain resolution and hosting configuration."
+          },
+          {
+            "id": 3,
+            "title": "HTTPS Redirect and Enforcement",
+            "description": "Implement automatic HTTP to HTTPS redirects and security headers.",
+            "dependencies": [
+              2
+            ],
+            "details": "Configure server-level HTTP to HTTPS redirects (301 permanent redirects). Add HSTS headers for browser security.",
+            "status": "completed",
+            "testStrategy": "Test HTTP to HTTPS redirects and security headers."
+          },
+          {
+            "id": 4,
+            "title": "Content and Resource Security Updates",
+            "description": "Update all website content and external resources to use secure HTTPS protocols.",
+            "dependencies": [
+              3
+            ],
+            "details": "Update all image URLs and asset references to use HTTPS. Verify external integrations use secure connections.",
+            "status": "completed",
+            "testStrategy": "Test secure content delivery and mixed content warnings."
+          },
+          {
+            "id": 5,
+            "title": "Netlify Custom Domain Migration",
+            "description": "Alternative approach using Netlify's automatic SSL with custom domain setup.",
+            "dependencies": [
+              1
+            ],
+            "details": "Configure underdoglazer.com as custom domain in Netlify dashboard. Enable automatic SSL certificate provisioning through Let's Encrypt.",
+            "status": "completed",
+            "testStrategy": "Test Netlify custom domain and automatic SSL functionality."
+          }
+        ]
+      },
+      {
+        "id": 22,
+        "title": "Fix Analytics Dashboard Dropdown Click Issues",
+        "description": "Resolve gear icon and dropdown click functionality issues in the Analytics dashboard.",
+        "details": "Fixed critical user interaction issues where the Settings gear icon and period dropdown were not clickable due to improper event handling. This was preventing users from accessing dashboard configuration options and time period selection.",
+        "testStrategy": "Test clicking on gear icon to open settings dropdown. Test period dropdown functionality. Verify dropdowns close only when clicking outside. Test arrange mode toggle and other settings functionality.",
+        "priority": "high",
+        "dependencies": [
+          13
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "JSX Syntax Error Resolution",
+            "description": "Fix malformed JSX comment causing build errors in App.jsx.",
+            "dependencies": [],
+            "details": "Identified and fixed missing JSX comment closing tag in App.jsx line 51. The comment was improperly structured causing the JSX parser to fail. Added proper comment closing structure to resolve build errors and allow dev server to run without issues.",
+            "status": "completed",
+            "testStrategy": "Verify dev server starts without JSX parsing errors and HMR updates work correctly."
+          },
+          {
+            "id": 2,
+            "title": "Click Outside Handler Bug Fix",
+            "description": "Fix dropdown click outside detection that was preventing all clicks.",
+            "dependencies": [
+              1
+            ],
+            "details": "The handleClickOutside function was listening to ALL mousedown events and immediately closing dropdowns without checking if clicks were actually outside the dropdown containers. This prevented the gear icon and dropdown buttons from being clickable.",
+            "status": "completed",
+            "testStrategy": "Test that dropdowns can be opened by clicking their buttons and only close when clicking outside the dropdown areas."
+          },
+          {
+            "id": 3,
+            "title": "Proper Event Detection Implementation",
+            "description": "Implement proper click outside detection using data attributes.",
+            "dependencies": [
+              2
+            ],
+            "details": "Added data-dropdown attributes to dropdown containers (period and settings). Updated click outside handler to use event.target.closest() method to properly detect if clicks were inside dropdown areas. Only close dropdowns when clicks are truly outside the dropdown containers.",
+            "status": "completed",
+            "testStrategy": "Verify clicking inside dropdowns keeps them open while clicking outside closes them appropriately."
+          },
+          {
+            "id": 4,
+            "title": "User Interface Testing",
+            "description": "Verify all dropdown functionality works correctly after fixes.",
+            "dependencies": [
+              3
+            ],
+            "details": "Tested gear icon clickability, settings dropdown opening/closing, period dropdown functionality, arrange mode toggle, and proper click outside behavior. All dropdown interactions now work as expected. Background dev server confirmed functionality.",
+            "status": "completed",
+            "testStrategy": "Comprehensive testing of all dropdown interactions and verification from user that functionality works correctly."
+          }
+        ]
+      },
+      {
+        "id": 23,
+        "title": "Add Individual Card Dragging to Performance Summary Section",
+        "description": "Implement individual card drag & drop functionality for Performance Summary cards to match other dashboard sections.",
+        "details": "Enhanced the Performance Summary section with individual card dragging capabilities. Previously, only section-level dragging was available, but users requested the ability to reorder individual performance metric cards (Mobile Load Time, Desktop Load Time, Uptime, SEO Score) within the section.",
+        "testStrategy": "Enable arrange mode via Settings dropdown. Test dragging individual performance cards within the Performance Summary section. Verify blue glow effects and drag handles appear. Confirm order persists after page refresh via localStorage.",
+        "priority": "high",
+        "dependencies": [
+          22
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "State Management Implementation",
+            "description": "Add performanceCardOrder state with localStorage persistence for card order tracking.",
+            "dependencies": [],
+            "details": "Created performanceCardOrder state with default order: ['mobile-load', 'desktop-load', 'uptime', 'seo']. Added localStorage integration to persist card arrangements across page refreshes. Implemented useEffect hook to automatically save order changes to localStorage with key 'analytics-performance-card-order'.",
+            "status": "completed",
+            "testStrategy": "Verify state initializes with correct default order and persists changes to localStorage."
+          },
+          {
+            "id": 2,
+            "title": "Drag Handler Function",
+            "description": "Create handlePerformanceDragEnd function for processing drag operations.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implemented handlePerformanceDragEnd function following the same pattern as other sections (handleOverviewDragEnd, handleCoreWebVitalsDragEnd). Uses arrayMove utility to reorder cards based on drag operations. Properly handles active/over drag states and updates performanceCardOrder state.",
+            "status": "completed",
+            "testStrategy": "Test drag operations update card order correctly and trigger state changes."
+          },
+          {
+            "id": 3,
+            "title": "Card Renderer Component",
+            "description": "Create renderPerformanceMetricCard function with SortableIndividualCard wrapper.",
+            "dependencies": [
+              2
+            ],
+            "details": "Built renderPerformanceMetricCard function that maps performance card IDs to their data and wraps each in SortableIndividualCard component. Includes performance status calculation logic and proper icon/metric mapping. Each card gets unique ID for drag operations and proper group assignment for visual feedback.",
+            "status": "completed",
+            "testStrategy": "Verify all performance cards render correctly with proper data and SortableIndividualCard wrapper."
+          },
+          {
+            "id": 4,
+            "title": "Section Rendering Update",
+            "description": "Update performance section with nested DndContext and mapped card rendering.",
+            "dependencies": [
+              3
+            ],
+            "details": "Replaced static PerformanceMetricCard rendering with dynamic mapped rendering using performanceCardOrder. Added nested DndContext with handlePerformanceDragEnd handler. Implemented SortableContext with rectSortingStrategy for grid-based dragging. Maintained existing visual layout and styling.",
+            "status": "completed",
+            "testStrategy": "Verify performance section renders with draggable cards in correct order from state."
+          },
+          {
+            "id": 5,
+            "title": "Integration Testing",
+            "description": "Verify all performance card drag functionality works correctly.",
+            "dependencies": [
+              4
+            ],
+            "details": "Tested individual card dragging for all 4 performance metrics. Verified blue glow effects and drag handles appear in arrange mode. Confirmed order persistence across page refreshes. Ensured drag boundaries work correctly (cards stay within Performance Summary section). All functionality matches behavior of other dashboard sections.",
+            "status": "completed",
+            "testStrategy": "Comprehensive testing of all drag interactions and verification from user that functionality works correctly."
+          }
+        ]
+      },
+      {
+        "id": 24,
+        "title": "Create Gallery Management Admin Interface",
+        "description": "Implement comprehensive gallery management functionality in admin dashboard with ability to add/remove images, edit metadata, drag & drop upload, and batch operations.",
+        "details": "Build a complete gallery management interface within the admin dashboard that integrates with the existing Gallery.jsx component. Create an AdminGallery component with drag & drop file upload using HTML5 File API or a library like react-dropzone. Implement an image grid display with thumbnail previews, file size, and upload date. Add a metadata editing modal that allows editing of image descriptions, categories, alt text, and other properties that display on the main Gallery page. Include batch operations for selecting multiple images and performing actions like delete, category change, or metadata updates. Ensure the interface matches the existing admin dashboard styling with dark theme and lime accents. Integrate with existing image storage solution and update the Gallery.jsx component to reflect changes made in admin. Add image optimization and validation (file types, sizes). Include loading states, error handling, and success notifications.",
+        "testStrategy": "Test drag & drop upload functionality with various file types and sizes. Verify image grid displays correctly with proper thumbnails and metadata. Test metadata editing modal with form validation and save/cancel functionality. Validate batch operations work correctly with multiple image selections. Ensure integration with Gallery.jsx component reflects admin changes immediately or after refresh. Test responsive design on mobile and desktop. Verify error handling for upload failures, invalid files, and network issues. Test loading states during upload and save operations.",
+        "status": "pending",
+        "dependencies": [
+          4,
+          11
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design and implement drag & drop upload interface",
+            "description": "Create a drag & drop file upload component using react-dropzone with validation for image file types and sizes",
+            "dependencies": [],
+            "details": "Implement AdminGallery component with react-dropzone integration for drag & drop file uploads. Add visual feedback during drag operations with hover states matching the dark theme and lime accents. Include file type validation (jpg, png, webp, gif) and size limits (e.g., 10MB max). Display upload progress indicators and handle multiple file uploads simultaneously. Integrate with existing admin dashboard layout and styling patterns.",
+            "status": "done",
+            "testStrategy": "Test drag & drop functionality with various file types including valid images and invalid files. Verify size limit enforcement and proper error messages. Test multiple file uploads and progress indicators. Validate visual feedback and styling consistency."
+          },
+          {
+            "id": 2,
+            "title": "Build image grid display with thumbnails and metadata",
+            "description": "Create a responsive grid layout showing uploaded images with thumbnails, file information, and selection capabilities",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop an image grid component that displays thumbnails with overlaid metadata (file size, upload date, dimensions). Implement checkbox selection for batch operations with visual selection indicators. Add hover effects showing quick actions (edit, delete). Create responsive grid layout that adapts from 2-6 columns based on viewport. Include lazy loading for performance with large image sets. Display image count and filtering options.",
+            "status": "done",
+            "testStrategy": "Verify grid responsiveness across different screen sizes. Test lazy loading performance with 50+ images. Validate selection mechanism works correctly including select all functionality. Check metadata display accuracy and hover interactions."
+          },
+          {
+            "id": 3,
+            "title": "Create metadata editing modal with form validation",
+            "description": "Implement a modal interface for editing image properties including descriptions, categories, alt text, and custom metadata",
+            "dependencies": [
+              2
+            ],
+            "details": "Build a modal component for editing image metadata with fields for title, description, alt text, categories (with predefined options matching Gallery.jsx), and custom tags. Include image preview within modal and form validation for required fields. Add save/cancel functionality with loading states. Implement keyboard navigation and escape key handling. Style modal to match admin dashboard dark theme with proper contrast ratios.",
+            "status": "done",
+            "testStrategy": "Test modal opening/closing with keyboard and mouse interactions. Verify form validation for required fields and character limits. Test save functionality and data persistence. Validate accessibility with screen readers and keyboard navigation."
+          },
+          {
+            "id": 4,
+            "title": "Implement batch operations and selection management",
+            "description": "Add functionality for selecting multiple images and performing batch actions like delete, category updates, and metadata changes",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Create batch operation toolbar that appears when images are selected, showing count and available actions. Implement batch delete with confirmation dialog, batch category assignment, and batch metadata updates. Add select all/none functionality and visual feedback for selected items. Include undo capability for destructive operations. Ensure operations update both admin view and public Gallery.jsx display.",
+            "status": "cancelled",
+            "testStrategy": "Test selection of multiple images including select all functionality. Verify batch operations execute correctly on all selected items. Test confirmation dialogs and undo functionality. Validate that changes reflect in both admin and public gallery views."
+          },
+          {
+            "id": 5,
+            "title": "Integrate with storage solution and Gallery.jsx synchronization",
+            "description": "Connect gallery management interface with image storage backend and ensure changes reflect in the public Gallery component",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Implement image upload to storage solution (Firebase Storage or similar) with automatic thumbnail generation. Create data synchronization between admin interface and Gallery.jsx component ensuring metadata updates, deletions, and new uploads appear immediately. Add image optimization during upload (resize, compress) while maintaining quality. Implement error handling for failed uploads and storage quota limits. Include success notifications and loading states throughout the workflow.",
+            "status": "pending",
+            "testStrategy": "Test end-to-end upload flow from drag & drop to storage. Verify synchronization between admin changes and public gallery display. Test error scenarios including network failures and storage limits. Validate image optimization maintains acceptable quality."
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-11T17:14:53.235Z",
+      "updated": "2025-08-07T19:36:00.630Z",
+      "description": "Tasks for master context - Updated task completion statuses"
+    }
+  }
+}

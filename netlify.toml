@@ -1,0 +1,88 @@
+[build]
+  # Directory to publish (Vite builds to 'dist' by default)
+  publish = "dist"
+  
+  # Build command
+  command = "npm run build"
+  
+  # Functions directory
+  functions = "netlify/functions"
+
+[build.environment]
+  # Node.js version for consistent builds
+  NODE_VERSION = "20"
+
+# Form notifications
+[[forms]]
+  name = "contact"
+  
+  [[forms.notifications]]
+    type = "email"
+    event = "submission"
+    to = "todd.underdoglazer@gmail.com"
+    subject = "New Contact Form Submission from Underdog Lazer"
+
+# HTTPS enforcement - redirect HTTP to HTTPS
+[[redirects]]
+  from = "http://underdoglazer.com/*"
+  to = "https://underdoglazer.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.underdoglazer.com/*"
+  to = "https://underdoglazer.com/:splat"
+  status = 301
+  force = true
+
+# Redirect www to non-www (HTTPS)
+[[redirects]]
+  from = "https://www.underdoglazer.com/*"
+  to = "https://underdoglazer.com/:splat"
+  status = 301
+  force = true
+
+# API redirects for production - MUST come before SPA catch-all
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# SPA (Single Page Application) configuration
+# This redirects all routes to index.html for React Router to handle
+# MUST be LAST to not interfere with API routes
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # HTTPS Security
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    # Frame Protection
+    X-Frame-Options = "DENY"
+    # XSS Protection
+    X-XSS-Protection = "1; mode=block"
+    # Content Type Protection
+    X-Content-Type-Options = "nosniff"
+    # Referrer Policy
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Permissions Policy
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    # Content Security Policy
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://www.google-analytics.com; connect-src 'self' https: https://www.google-analytics.com https://analytics.google.com; form-action 'self';"
+
+# Cache static assets for 1 year
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache images for 1 month
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"

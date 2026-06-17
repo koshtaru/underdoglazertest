@@ -1,0 +1,43 @@
+# Task ID: 3
+# Title: Develop Home Page with Hero Video and Service Overview ✅
+# Status: completed
+# Dependencies: 2
+# Priority: high
+# Description: Create the Home page featuring a hero video, service overview, and clear calls to action.
+# Details:
+Design a visually engaging hero section with a video (optimized for web). Add service overview cards and prominent CTA buttons. Ensure layout is responsive and uses dark theme styling. Use semantic HTML for accessibility.
+
+# Test Strategy:
+Check video loads quickly and responsively. Validate CTAs are accessible and visible. Test layout on multiple devices.
+
+# Subtasks:
+## 1. Design Responsive Home Page Layout with Dark Theme ✅ [completed]
+### Dependencies: None
+### Description: Create the foundational layout for the Home page using a responsive grid system and apply dark theme styling throughout.
+### Details:
+Set up the Home page structure using semantic HTML5 elements (header, main, section, etc.). Implement a responsive grid or flexbox layout to ensure adaptability across devices. Apply dark theme colors, typography, and spacing using CSS variables or a CSS-in-JS solution. Ensure all base elements are styled for accessibility and visual consistency.
+
+## 2. Implement Hero Section with Optimized Video ✅ [completed]
+### Dependencies: 3.1
+### Description: Develop the hero section at the top of the Home page, featuring a web-optimized video and introductory content.
+### Details:
+Embed a video using the <video> tag or a lightweight video player library. Optimize video for web (compressed format, appropriate resolution, lazy loading, poster image fallback). Add overlay text and introductory messaging. Ensure the hero section is visually prominent and adapts to different screen sizes.
+
+## 3. Create Service Overview Cards ✅ [completed]
+### Dependencies: 3.2
+### Description: Add a section below the hero area displaying service overview cards, each highlighting a core offering.
+### Details:
+Design and implement a set of cards using semantic HTML (e.g., <article> or <section> for each card). Each card should include an icon or image, a title, a brief description, and use accessible markup. Style cards to fit the dark theme and ensure they are responsive and visually distinct.
+
+## 4. Add Prominent Calls to Action (CTAs) ✅ [completed]
+### Dependencies: 3.3
+### Description: Integrate clear and visually distinct CTA buttons in both the hero section and service overview area.
+### Details:
+Place primary CTA buttons (e.g., 'Get Started', 'Contact Us') in the hero and near service cards. Style buttons for prominence, accessibility (focus states, ARIA labels), and ensure they are easily tappable on mobile. Link CTAs to appropriate routes or actions.
+
+## 5. Ensure Accessibility and Semantic HTML Compliance ✅ [completed]
+### Dependencies: 3.4
+### Description: Review and enhance the Home page for accessibility and semantic HTML best practices.
+### Details:
+Audit the page for semantic HTML usage (landmarks, headings, ARIA roles where needed). Add alt text to images, ensure video captions or transcripts are available, and verify keyboard navigation. Use accessibility testing tools (e.g., axe, Lighthouse) to identify and fix issues.
+

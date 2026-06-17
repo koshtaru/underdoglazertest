@@ -1,0 +1,43 @@
+# Task ID: 6
+# Title: Implement Contact Page with Validated Form and Project Type Dropdown ✅
+# Status: completed
+# Dependencies: 2
+# Priority: high
+# Description: Build a Contact page featuring a validated form, project type dropdown, and company contact info.
+# Details:
+Create a ContactForm component with fields for name, email, message, and project type dropdown. Add client-side validation (required fields, email format). Display company contact info. Ensure accessibility and responsive design.
+
+# Test Strategy:
+Test form validation, error messages, and submission. Validate dropdown accessibility. Check layout on all devices.
+
+# Subtasks:
+## 1. Set Up Contact Page Layout and Structure ✅ [completed]
+### Dependencies: None
+### Description: Create the main Contact page layout, including placeholders for the form and company contact information. Ensure the page structure is semantically correct and accessible.
+### Details:
+Create a new Contact page component or route. Use semantic HTML elements (e.g., <main>, <section>, <form>). Add headings and containers for the contact form and company info. Ensure ARIA landmarks and roles are used where appropriate.
+
+## 2. Develop ContactForm Component with Input Fields ✅ [completed]
+### Dependencies: 6.1
+### Description: Implement the ContactForm component with input fields for name, email, message, and a project type dropdown.
+### Details:
+Create a controlled form component with labeled input fields for name, email, and message. Add a select dropdown for project type with several options. Ensure all fields have associated labels and appropriate input types.
+
+## 3. Implement Client-side Validation for Form Fields ✅ [completed]
+### Dependencies: 6.2
+### Description: Add client-side validation to ensure required fields are filled and the email is in a valid format.
+### Details:
+Implement validation logic for required fields and email format using regex or a validation library. Display clear error messages near each field. Prevent form submission if validation fails.
+
+## 4. Display Company Contact Information ✅ [completed]
+### Dependencies: 6.1
+### Description: Add a section to the Contact page displaying company contact details such as address, phone number, and email.
+### Details:
+Create a visually distinct section for company contact info. Use appropriate HTML elements (e.g., <address>, <a href='tel:'>, <a href='mailto:'>). Ensure information is accessible and easy to find.
+
+## 5. Ensure Accessibility and Responsive Design ✅ [completed]
+### Dependencies: 6.3, 6.4
+### Description: Review and enhance the Contact page and form for accessibility and responsiveness across devices.
+### Details:
+Use ARIA attributes where needed, ensure color contrast, and test with screen readers. Apply responsive CSS (media queries, flexible layouts) to ensure usability on mobile and desktop. Test tab order and focus management.
+

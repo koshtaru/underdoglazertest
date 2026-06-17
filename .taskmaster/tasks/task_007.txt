@@ -1,0 +1,43 @@
+# Task ID: 7
+# Title: Apply Dark Theme and Responsive CSS with Custom Properties ✅
+# Status: completed
+# Dependencies: 1
+# Priority: high
+# Description: Implement global dark theme (#121212) with lime green accent (#32CD32) using CSS custom properties. Ensure mobile-first, responsive design.
+# Details:
+Define CSS variables for colors and spacing. Apply styles globally and to all components. Use media queries for responsiveness. Ensure all components inherit theme and are visually consistent.
+
+# Test Strategy:
+Check color scheme and responsiveness across all pages. Validate contrast ratios and accessibility. Test on multiple devices.
+
+# Subtasks:
+## 1. Define CSS Custom Properties for Theme and Spacing ✅ [completed]
+### Dependencies: None
+### Description: Create a set of CSS custom properties (variables) for the dark theme background, lime green accent, text colors, and spacing units. Place these variables in the :root selector for global access.
+### Details:
+In your main CSS or SCSS file, define variables such as --color-bg: #121212, --color-accent: #32CD32, --color-text: #FFFFFF, and spacing variables like --spacing-xs, --spacing-sm, etc. Ensure all color and spacing values are centralized for easy theme management.
+
+## 2. Apply Global Dark Theme Styles ✅ [completed]
+### Dependencies: 7.1
+### Description: Set global styles using the defined CSS variables to apply the dark background, accent color, and text color. Ensure the body and root elements use these variables.
+### Details:
+In your global stylesheet, set body { background: var(--color-bg); color: var(--color-text); }. Apply accent color to links, buttons, and interactive elements using var(--color-accent). Ensure scrollbars and selection colors are also themed.
+
+## 3. Implement Responsive, Mobile-First Layout with Media Queries ✅ [completed]
+### Dependencies: 7.2
+### Description: Structure the CSS to use a mobile-first approach, adding media queries for larger screens. Ensure spacing and layout adapt smoothly across devices.
+### Details:
+Start with base styles optimized for mobile (small screens). Use media queries (e.g., @media (min-width: 600px)) to adjust layout, font sizes, and spacing for tablets and desktops. Reference spacing variables for consistent padding and margins.
+
+## 4. Update All Components to Inherit Theme Variables ✅ [completed]
+### Dependencies: 7.3
+### Description: Refactor component styles to use the defined CSS custom properties for colors and spacing, ensuring consistency across the UI.
+### Details:
+Replace hardcoded color and spacing values in all component stylesheets with the corresponding CSS variables. Ensure components do not override the global theme unless necessary, and use variables for hover, active, and focus states.
+
+## 5. Verify Visual Consistency and Accessibility ✅ [completed]
+### Dependencies: 7.4
+### Description: Conduct a comprehensive review to ensure all components are visually consistent, the dark theme is applied everywhere, and the UI meets accessibility standards.
+### Details:
+Check for color contrast using accessibility tools, ensure focus indicators are visible, and confirm that all components inherit the dark theme. Address any inconsistencies or accessibility issues found.
+

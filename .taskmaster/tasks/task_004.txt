@@ -1,0 +1,43 @@
+# Task ID: 4
+# Title: Build Gallery Page with Categorized Images and Lightbox ✅
+# Status: completed
+# Dependencies: 2
+# Priority: high
+# Description: Implement a Gallery page with 20+ images, category filters, modal lightbox, and image metadata display.
+# Details:
+Create a Gallery component that loads images with categories and metadata. Implement filtering by category. Use lazy loading for images. Clicking an image opens a modal lightbox with metadata. Ensure ARIA roles for modals and keyboard navigation.
+
+# Test Strategy:
+Test filtering, image loading, and modal interactions. Validate lazy loading and accessibility of modals. Check performance with 20+ images.
+
+# Subtasks:
+## 1. Set Up Image Data Structure with Categories and Metadata ✅ [completed]
+### Dependencies: None
+### Description: Design and implement a data structure to store at least 20 images, each with associated category and metadata (e.g., title, description, date).
+### Details:
+Create a JSON or JavaScript array/object to hold image URLs, categories, and metadata fields. Ensure each image entry includes all necessary metadata for display in the gallery and lightbox. Store this data in a separate module or as a constant for easy import.
+
+## 2. Implement Gallery Component with Lazy-Loaded Images ✅ [completed]
+### Dependencies: 4.1
+### Description: Develop the Gallery component that displays all images using lazy loading to optimize performance.
+### Details:
+Build a React (or relevant framework) component that maps over the image data and renders image thumbnails. Use an image lazy-loading library or the native 'loading="lazy"' attribute. Ensure images are visually arranged in a grid layout.
+
+## 3. Add Category Filter Functionality ✅ [completed]
+### Dependencies: 4.2
+### Description: Implement UI controls to filter displayed images by category and update the gallery view accordingly.
+### Details:
+Create filter buttons or a dropdown listing all unique categories. When a filter is selected, update the gallery to show only images from the chosen category. Ensure the filter state is managed and the UI updates reactively.
+
+## 4. Develop Modal Lightbox with Image Metadata Display ✅ [completed]
+### Dependencies: 4.3
+### Description: Create a modal lightbox that opens when an image is clicked, displaying the full-size image and its metadata.
+### Details:
+Implement a modal component that overlays the page. When a thumbnail is clicked, open the modal showing the selected image and its metadata (title, description, date, etc.). Ensure the modal can be closed via a close button or overlay click.
+
+## 5. Ensure Accessibility: ARIA Roles and Keyboard Navigation ✅ [completed]
+### Dependencies: 4.4
+### Description: Enhance the modal lightbox and gallery for accessibility, including ARIA roles and keyboard navigation support.
+### Details:
+Add appropriate ARIA attributes to the modal (e.g., role="dialog", aria-modal="true"). Implement keyboard navigation: allow opening images with Enter/Space, closing modal with Escape, and navigating between images with arrow keys. Test with screen readers.
+

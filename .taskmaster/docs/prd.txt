@@ -1,0 +1,55 @@
+# Product Requirements Document (PRD)
+
+## Project Overview
+Underdog Lazer is a modern React single-page application for a professional laser engraving business. The website showcases services, a portfolio/gallery, company information, and provides easy contact for potential clients.
+
+## Core Features
+- Responsive navigation bar (desktop/mobile)
+- Home page with hero video, service overview, and calls to action
+- Gallery page with 20+ categorized images, filter, modal lightbox, and metadata
+- About page with company story, team bios, and interactive cards
+- Contact page with a validated form, project type dropdown, and contact info
+- Professional, accessible, and responsive design
+
+## Target Users
+- Potential business clients (corporate branding, promotional items)
+- Individuals seeking custom gifts or memorial pieces
+- General public interested in laser engraving services
+
+## Technical Stack
+- React 19.1.0, Vite 7.0.0, React Router DOM 7.6.2
+- Pure CSS with custom properties (dark theme, responsive, accessible)
+- ESLint for code quality
+- Stagewise plugins for React development
+- @dnd-kit for advanced drag & drop functionality
+- Firebase Authentication for admin access control
+- Google Analytics 4 for live data integration
+
+## Design/Branding
+- Dark theme (#121212) with lime green accent (#32CD32)
+- Responsive, mobile-first layout
+- Professional imagery and video
+- Accessibility: ARIA labels, semantic HTML, keyboard navigation
+
+## Other Requirements
+- Performance optimizations (lazy loading, optimized images)
+- Static site hosting (Netlify, Vercel, etc.)
+- Easy customization for branding, content, and gallery images
+
+## Admin Dashboard Features (Implemented)
+- Secure Firebase authentication with role-based access control
+- Live Google Analytics 4 integration with real-time business metrics
+- Advanced individual card drag & drop functionality:
+  - Overview Metrics section (7 draggable cards)
+  - Top Pages section (dynamic cards from GA4 API)
+  - Core Web Vitals section (5 performance metric cards)
+  - Blue glow effects and visual feedback during arrange mode
+  - Persistent card arrangements via localStorage
+  - Section-based drag boundaries (cards stay within their groups)
+- Professional admin layout with sidebar navigation
+- Comprehensive analytics dashboard with live data visualization
+
+## Future Upgrade Options
+- CMS integration, quote system, e-commerce functionality
+- PWA capabilities, advanced reporting and data export
+- Core Web Vitals monitoring, automated email reports 

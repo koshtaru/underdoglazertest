@@ -1,0 +1,180 @@
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+
+function Home() {
+  const serviceList = [
+    { title: 'Custom gifts & personal pieces', desc: 'Wedding gifts, memorials, anniversary items — made for one person, not a shelf.' },
+    { title: 'Business branding', desc: 'Cards, patches, signage, and swag that actually looks like your brand.' },
+    { title: 'Laser cutting', desc: 'Clean cuts, custom shapes, stencils, and patches cut to your exact specs.' },
+    { title: 'Industrial & trade marking', desc: 'Asset tags, serial numbers, part IDs — permanent and precise.' },
+    { title: 'Apparel & hat patches', desc: 'Leather patches and custom hat branding done right.' },
+  ];
+
+  const workSamples = [
+    {
+      src: '/img/gallery/apparel-degrave-electric-hat.jpg',
+      title: 'Degrave Electric Branded Hat',
+      detail: 'Leather Patch · Laser Cut & Engraved',
+    },
+    {
+      src: '/img/gallery/corporate-underdog-business-card.jpg',
+      title: 'Underdog Lazer Business Card',
+      detail: 'Black Anodized Metal · Precision Engraving',
+    },
+    {
+      src: '/img/gallery/promotional-drinkware-01.jpg',
+      title: 'Custom Drinkware Collection',
+      detail: 'Multi-Surface Engraving',
+    },
+  ];
+
+  const handleSeeWorkClick = (e) => {
+    e.preventDefault();
+    document.getElementById('our-work')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <>
+      <Helmet>
+        <title>Underdog Lazer — Custom Laser Engraving · Woodville, TX</title>
+        <meta name="description" content="Custom laser engraving for gifts, business branding, hat patches, and more. Based in Woodville, TX. Ships anywhere in the US." />
+        <meta property="og:title" content="Underdog Lazer — Custom Laser Engraving · Woodville, TX" />
+        <meta property="og:description" content="Custom laser engraving for gifts, business branding, hat patches, and more. Ships anywhere in the US." />
+      </Helmet>
+      {/* Hero Section — Logo First */}
+      <section className="hero" aria-labelledby="hero-title">
+        <video
+          className="hero__video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/img/hero-background.jpg"
+        >
+          <source src="/img/hero-background.mp4" type="video/mp4" />
+          <source src="/img/hero-background.webm" type="video/webm" />
+        </video>
+
+        <div className="hero__video-overlay"></div>
+
+        <div className="container">
+          <div className="hero__split">
+            <div className="hero__logo-wrap">
+              <img
+                src="/img/logo-transparent.png"
+                alt="Underdog Lazer"
+                className="hero__logo"
+                id="hero-title"
+              />
+            </div>
+            <div className="hero__copy">
+              <p className="hero__tagline">
+                Custom laser engraving for people who care about the details.
+              </p>
+              <div className="hero__cta">
+                <a href="#our-work" className="btn btn-secondary" onClick={handleSeeWorkClick}>
+                  See Our Work
+                </a>
+                <Link to="/contact" className="btn btn-primary">
+                  Get a Quote
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Work Samples Grid */}
+      <section className="section" id="our-work" aria-labelledby="work-title">
+        <div className="container">
+          <h2 className="section-title" id="work-title">Our Work</h2>
+          <p className="section-subtitle">Real projects. Real people.</p>
+
+          <div className="work-grid">
+            {workSamples.map((item, i) => (
+              <div key={i} className="work-grid__item">
+                <img src={item.src} alt={item.title} loading="lazy" />
+                <div className="work-grid__overlay">
+                  <p className="work-grid__overlay-title">{item.title}</p>
+                  <p className="work-grid__overlay-detail">{item.detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'right', marginTop: 'var(--space-md)' }}>
+            <Link to="/gallery" className="text-accent" style={{ fontWeight: 500, textDecoration: 'none' }}>
+              View Full Gallery →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="section how-it-works" style={{ backgroundColor: 'var(--clr-bg-light)' }} aria-labelledby="how-title">
+        <div className="container">
+          <h2 className="section-title" id="how-title">How it works</h2>
+          <p className="section-subtitle">Three steps. No guesswork.</p>
+
+          <div className="how-steps">
+            <div className="how-step">
+              <div className="how-step__circle">1</div>
+              <h3 className="how-step__title">Send your idea</h3>
+              <p className="how-step__body">
+                Photo, sketch, logo file, or just describe it. No file? No problem — I'll work with what you've got.
+              </p>
+            </div>
+
+            <div className="how-step">
+              <div className="how-step__circle">2</div>
+              <h3 className="how-step__title">See it before I burn it</h3>
+              <p className="how-step__body">
+                You get a digital proof before anything is engraved. Approve it, request changes, or kill it — your call.
+              </p>
+            </div>
+
+            <div className="how-step">
+              <div className="how-step__circle">3</div>
+              <h3 className="how-step__title">Pick up or ship</h3>
+              <p className="how-step__body">
+                Local pickup in Woodville, or shipped anywhere in the US. Most orders out within a week.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section className="section" aria-labelledby="services-title">
+        <div className="container">
+          <div className="services-editorial">
+            <div className="services-editorial__left">
+              <p className="services-editorial__eyebrow">Underdog Lazer</p>
+              <h2 className="services-editorial__headline" id="services-title">
+                Made for people who care about the details
+              </h2>
+              <p className="services-editorial__body">
+                Whether it's a logo on a leather patch or a memorial piece for someone you love — every job gets the same attention. No minimums. No runaround. Just send me what you've got.
+              </p>
+            </div>
+
+            <ul className="services-editorial__list">
+              {serviceList.map((item, i) => (
+                <li key={i} className="services-editorial__item">
+                  <span className="services-editorial__dot" aria-hidden="true"></span>
+                  <div>
+                    <strong className="services-editorial__item-title">{item.title}</strong>
+                    <span className="services-editorial__item-desc"> — {item.desc}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </>
+  );
+}
+
+export default Home;
