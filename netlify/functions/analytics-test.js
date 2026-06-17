@@ -2,7 +2,7 @@ import { BetaAnalyticsDataClient } from '@google-analytics/data';
 
 export const handler = async (event, context) => {
   const headers = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || 'https://underdoglazer.com',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json',
@@ -90,14 +90,13 @@ export const handler = async (event, context) => {
     };
 
   } catch (error) {
+    console.error('Analytics test error:', error);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
         success: false,
-        error: error.message,
-        stack: error.stack,
-        timestamp: new Date().toISOString()
+        error: 'Failed to fetch analytics data',
       }),
     };
   }

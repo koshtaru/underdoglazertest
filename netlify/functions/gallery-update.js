@@ -1,4 +1,4 @@
-const { getFirestore } = require('./firebase-admin');
+const { getFirestore, verifyAuthToken } = require('./firebase-admin');
 
 // Firestore collection and document references
 const GALLERY_COLLECTION = 'gallery';
@@ -193,12 +193,10 @@ async function deleteIndividualImage(imageId) {
 }
 
 exports.handler = async (event, context) => {
-  console.log('Gallery UPDATE function called');
-  
-  // Handle CORS
+  const allowedOrigin = process.env.ALLOWED_ORIGIN || 'https://underdoglazer.com';
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'PUT, OPTIONS',
     'Content-Type': 'application/json'
   };
@@ -216,6 +214,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    await verifyAuthToken(event.headers.authorization);
     console.log('Request method:', event.httpMethod);
     console.log('Request body exists:', !!event.body);
     
@@ -431,33 +430,13 @@ exports.handler = async (event, context) => {
     
   } catch (error) {
     console.error('Gallery UPDATE error:', error);
-    
-    // Provide specific error messages for common Firebase issues
-    let errorMessage = 'Failed to update gallery data';
-    let statusCode = 500;
-    
-    if (error.message.includes('Firebase Admin credentials not configured')) {
-      errorMessage = 'Firebase Admin SDK not configured properly. Please check Netlify environment variables.';
-      statusCode = 503;
-    } else if (error.message.includes('Missing or insufficient permissions')) {
-      errorMessage = 'Firebase service account lacks Firestore write permissions. Please update service account roles.';
-      statusCode = 403;
-    } else if (error.message.includes('PERMISSION_DENIED')) {
-      errorMessage = 'Firestore write permission denied. Please check service account roles and Firestore security rules.';
-      statusCode = 403;
-    } else if (error.message.includes('Firestore initialization failed')) {
-      errorMessage = 'Firestore database connection failed. Please check Firebase project configuration.';
-      statusCode = 503;
-    }
-    
+    const statusCode = error.statusCode || 500;
     return {
       statusCode,
       headers,
       body: JSON.stringify({
         success: false,
-        error: errorMessage,
-        message: error.message,
-        details: 'Check Netlify function logs for more information'
+        error: statusCode === 401 ? 'Unauthorized' : 'Failed to update gallery data'
       })
     };
   }

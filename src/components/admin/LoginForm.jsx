@@ -40,16 +40,11 @@ const LoginForm = () => {
     setAuthError(null);
 
     try {
-      console.log('Attempting login with:', data.email);
-      const result = await login(data.email, data.password);
-      console.log('Login successful:', result.user.email);
-      
-      // Small delay to ensure auth state updates
+      await login(data.email, data.password);
       setTimeout(() => {
         navigate(from, { replace: true });
       }, 100);
     } catch (error) {
-      console.error('Login failed:', error);
       setAuthError(error.message || 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);
@@ -185,18 +180,6 @@ const LoginForm = () => {
                 'Sign In to Dashboard'
               )}
             </button>
-          </div>
-
-          {/* Demo Credentials */}
-          <div className="mt-6 p-4 rounded-md border" style={{ 
-            backgroundColor: 'var(--clr-bg-light)', 
-            borderColor: 'var(--clr-border)' 
-          }}>
-            <p className="text-sm font-medium" style={{ color: 'var(--clr-accent)' }}>Demo Credentials:</p>
-            <div className="mt-2 text-sm" style={{ color: 'var(--clr-text-muted)' }}>
-              <p><strong style={{ color: 'var(--clr-text)' }}>Email:</strong> admin@underdoglazer.com</p>
-              <p><strong style={{ color: 'var(--clr-text)' }}>Password:</strong> admin123</p>
-            </div>
           </div>
 
           {/* Back to Main Site */}

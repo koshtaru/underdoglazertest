@@ -6,12 +6,13 @@ import {
   sendPasswordResetEmail,
   updateProfile
 } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { auth } from '../config/firebase';
+import app from '../config/firebase';
 
 const AuthContext = createContext();
 
-// Testing mode: Bypass Firebase authentication for localhost testing
-const TESTING_MODE = false;
+const ROLE_HIERARCHY = { admin: 3, 'content-manager': 2, viewer: 1 };
 
 const useAuth = () => {
   const context = useContext(AuthContext);
@@ -22,9 +23,9 @@ const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(TESTING_MODE ? { uid: 'test-user', email: 'test@example.com' } : null);
-  const [userRole, setUserRole] = useState(TESTING_MODE ? 'admin' : null);
-  const [loading, setLoading] = useState(TESTING_MODE ? false : true);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [userRole, setUserRole] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
 
   // Sign in function
@@ -63,20 +64,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Assign admin role to all authenticated users
+  // Fetch the user's role from Firestore users/{uid} document
   const fetchUserRole = async (uid) => {
     try {
-      console.log('Assigning admin role for user:', uid);
-      
-      // All authenticated users get admin access
-      const assignedRole = 'admin';
-      
-      console.log('Assigning role:', assignedRole);
-      setUserRole(assignedRole);
-      
+      const db = getFirestore(app);
+      const userDoc = await getDoc(doc(db, 'users', uid));
+      const role = userDoc.exists() ? (userDoc.data().role || 'viewer') : 'viewer';
+      setUserRole(role);
     } catch (error) {
-      console.error('Error assigning user role:', error);
-      setUserRole('admin'); // Fallback to admin
+      console.error('Error fetching user role:', error);
+      setUserRole('viewer');
     }
   };
 
@@ -87,31 +84,23 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Check if user has permission - all authenticated users have admin access
-  const hasPermission = () => {
-    // All authenticated users have full admin access
-    return true;
+  // Check if user meets the required role level
+  const hasPermission = (requiredRole = 'viewer') => {
+    if (!userRole) return false;
+    return (ROLE_HIERARCHY[userRole] || 0) >= (ROLE_HIERARCHY[requiredRole] || 0);
   };
 
   // Auth state listener
   useEffect(() => {
-    if (TESTING_MODE) {
-      // Skip Firebase auth when in testing mode
-      console.log('TESTING MODE: Using mock authentication');
-      return;
-    }
-    
     let unsubscribe;
-    
+
     try {
       unsubscribe = onAuthStateChanged(auth, async (user) => {
         try {
           setCurrentUser(user);
           if (user) {
-            console.log('User logged in:', user.email);
             await fetchUserRole(user.uid);
           } else {
-            console.log('User logged out');
             setUserRole(null);
           }
         } catch (error) {
@@ -123,10 +112,6 @@ export const AuthProvider = ({ children }) => {
       });
     } catch (error) {
       console.error('Firebase initialization error:', error);
-      // Fallback for development when Firebase is not configured
-      console.warn('Firebase not configured properly, using development fallback');
-      setCurrentUser({ email: 'dev@underdoglazer.com', uid: 'dev-user' });
-      setUserRole('admin');
       setLoading(false);
     }
 

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { auth } from '../config/firebase';
 
 // API endpoints - with development fallback
 const isDevelopment = import.meta.env.DEV;
@@ -354,16 +355,14 @@ const galleryAPI = {
   },
   
   async updateGallery(action, imageId = null, updatedData = null) {
-    console.log(`📡 Updating gallery via API: ${action}, imageId: ${imageId}`);
-    
-    // Always use API for consistency between dev and production
     const apiEndpoint = isDevelopment ? '/api/gallery-update' : GALLERY_UPDATE_ENDPOINT;
-    console.log(`🌐 Calling API endpoint: ${apiEndpoint}`);
-    
+
+    const token = await auth.currentUser?.getIdToken();
     const response = await fetch(apiEndpoint, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
       },
       body: JSON.stringify({
         action,
@@ -386,31 +385,6 @@ const galleryAPI = {
   }
 };
 
-// Debug helper - expose to window for console debugging
-if (typeof window !== 'undefined') {
-  window.debugGalleryStorage = {
-    fetchFromAPI: async () => {
-      try {
-        const data = await galleryAPI.fetchGallery();
-        console.log('Current gallery data from API:', data);
-        return data;
-      } catch (error) {
-        console.error('Failed to fetch from API:', error);
-        return null;
-      }
-    },
-    updateViaAPI: async (action, imageId, updatedData) => {
-      try {
-        const result = await galleryAPI.updateGallery(action, imageId, updatedData);
-        console.log('API update result:', result);
-        return result;
-      } catch (error) {
-        console.error('Failed to update via API:', error);
-        return null;
-      }
-    }
-  };
-}
 
 // Fallback data in case API is unavailable
 const fallbackGalleryImages = [];
@@ -600,10 +574,12 @@ export const useGalleryStorage = () => {
         result = await handleDevImageUpload(imageData, originalName, metadata);
       } else {
         // In production, use Netlify function
+        const token = await auth.currentUser?.getIdToken();
         const response = await fetch('/.netlify/functions/image-upload', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {})
           },
           body: JSON.stringify({
             imageData,

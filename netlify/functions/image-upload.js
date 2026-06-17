@@ -1,4 +1,4 @@
-const { getFirestore, getStorage } = require('./firebase-admin');
+const { getFirestore, getStorage, verifyAuthToken } = require('./firebase-admin');
 
 // Generate unique filename
 function generateUniqueFilename(originalName) {
@@ -143,13 +143,13 @@ async function addImageToGallery(imageData, storageUrl, filename) {
   }
 }
 
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
 exports.handler = async (event, context) => {
-  console.log('Image UPLOAD function called');
-  
-  // Handle CORS
+  const allowedOrigin = process.env.ALLOWED_ORIGIN || 'https://underdoglazer.com';
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json'
   };
@@ -167,6 +167,8 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    await verifyAuthToken(event.headers.authorization);
+
     // Parse request body
     if (!event.body) {
       return {
@@ -197,12 +199,13 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Validate base64 image data
-    if (!imageData.startsWith('data:image/')) {
+    // Validate MIME type against allowlist
+    const mimeMatch = imageData.match(/^data:([^;]+);base64,/);
+    if (!mimeMatch || !ALLOWED_MIME_TYPES.includes(mimeMatch[1])) {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Invalid image data format' })
+        body: JSON.stringify({ error: 'Invalid image type. Allowed: JPEG, PNG, WebP, GIF' })
       };
     }
 
@@ -265,13 +268,13 @@ exports.handler = async (event, context) => {
 
   } catch (error) {
     console.error('Image upload error:', error);
+    const statusCode = error.statusCode || 500;
     return {
-      statusCode: 500,
+      statusCode,
       headers,
       body: JSON.stringify({
         success: false,
-        error: 'Failed to upload image',
-        message: error.message
+        error: statusCode === 401 ? 'Unauthorized' : 'Failed to upload image'
       })
     };
   }
