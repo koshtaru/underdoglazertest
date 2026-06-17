@@ -41,5 +41,11 @@ node_modules/
 # Temporary files
 fix-npm.sh
 
+# Firebase credentials - NEVER commit these
+CLEANED_FIREBASE_JSON.md
+*.serviceaccount.json
+*firebase*credentials*.json
+*service_account*.json
+
 # Cursor IDE (may contain API keys)
 .cursor/
