@@ -1,7 +1,7 @@
 export const handler = async (event, context) => {
   const headers = {
     'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || 'https://underdoglazer.com',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json',
   };
@@ -19,6 +19,10 @@ export const handler = async (event, context) => {
   }
 
   try {
+    // Analytics data is for the authenticated admin dashboard only.
+    const { verifyAuthToken } = require('./firebase-admin');
+    await verifyAuthToken(event.headers.authorization);
+
     const { period = '7d' } = event.queryStringParameters || {};
     
     // Calculate date range
@@ -238,7 +242,15 @@ export const handler = async (event, context) => {
 
   } catch (error) {
     console.error('Analytics working error:', error);
-    
+
+    if (error.statusCode === 401) {
+      return {
+        statusCode: 401,
+        headers,
+        body: JSON.stringify({ success: false, error: 'Unauthorized' }),
+      };
+    }
+
     return {
       statusCode: 500,
       headers,
