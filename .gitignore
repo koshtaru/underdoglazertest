@@ -40,3 +40,6 @@ node_modules/
 
 # Temporary files
 fix-npm.sh
+
+# Cursor IDE (may contain API keys)
+.cursor/

@@ -1,25 +1,23 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const { verifyAuthToken } = require('./firebase-admin');
 
 export const handler = async (event, context) => {
-  // Set CORS headers
+  const allowedOrigin = process.env.ALLOWED_ORIGIN || 'https://underdoglazer.com';
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'PUT, OPTIONS',
     'Content-Type': 'application/json'
   };
 
-  // Handle preflight requests
   if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 200,
-      headers,
-      body: ''
-    };
+    return { statusCode: 200, headers, body: '' };
   }
 
-  // Only allow PUT requests
   if (event.httpMethod !== 'PUT') {
     return {
       statusCode: 405,
@@ -29,8 +27,10 @@ export const handler = async (event, context) => {
   }
 
   try {
+    await verifyAuthToken(event.headers.authorization);
+
     const { filename, metadata } = JSON.parse(event.body);
-    
+
     if (!filename || !metadata) {
       return {
         statusCode: 400,
@@ -39,32 +39,24 @@ export const handler = async (event, context) => {
       };
     }
 
-    // Sanitize filename to prevent directory traversal
     const sanitizedFilename = path.basename(filename, '.json') + '.json';
-    
-    // In development, update the public directory
-    // In production, this would need to update the correct location
     const metadataPath = path.join(process.cwd(), 'public', 'img', 'gallery', sanitizedFilename);
-    
-    // Write the updated metadata
+
     await fs.writeFile(metadataPath, JSON.stringify(metadata, null, 2));
-    
+
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ 
-        success: true, 
-        message: `Updated metadata for ${sanitizedFilename}` 
-      })
+      body: JSON.stringify({ success: true, message: `Updated metadata for ${sanitizedFilename}` })
     };
   } catch (error) {
     console.error('Error updating metadata:', error);
+    const statusCode = error.statusCode || 500;
     return {
-      statusCode: 500,
+      statusCode,
       headers,
-      body: JSON.stringify({ 
-        error: 'Failed to update metadata',
-        details: error.message 
+      body: JSON.stringify({
+        error: statusCode === 401 ? 'Unauthorized' : 'Failed to update metadata'
       })
     };
   }

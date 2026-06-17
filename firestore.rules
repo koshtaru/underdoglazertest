@@ -2,18 +2,21 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Gallery collection - Allow read access for public gallery
-    // Allow write access for authenticated admin users only
+    // Gallery collection: public reads, no client-side writes
+    // All writes go through Netlify functions using Firebase Admin SDK (bypasses rules)
     match /gallery/{document} {
-      // Allow read access for everyone (public gallery needs this)
       allow read: if true;
-      
-      // Allow write access only for authenticated users
-      // In production, you may want to add more specific role-based access
-      allow write: if request.auth != null;
+      allow write: if false;
     }
-    
-    // Default rule - deny access to all other collections
+
+    // Users collection: authenticated users can read their own role document
+    // Role documents must be created via Firebase Admin SDK or Firebase console
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if false;
+    }
+
+    // Default deny
     match /{document=**} {
       allow read, write: if false;
     }

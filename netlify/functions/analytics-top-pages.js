@@ -1,7 +1,6 @@
 export const handler = async (event, context) => {
-  // Set CORS headers
   const headers = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || 'https://underdoglazer.com',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json',
@@ -263,7 +262,6 @@ export const handler = async (event, context) => {
       body: JSON.stringify({
         success: false,
         error: 'Failed to fetch top pages data',
-        message: error.message,
       }),
     };
   }

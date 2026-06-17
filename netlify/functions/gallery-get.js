@@ -107,9 +107,8 @@ function getDefaultGalleryData() {
 exports.handler = async (event, context) => {
   console.log('Gallery GET function called');
   
-  // Handle CORS
   const headers = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || 'https://underdoglazer.com',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json'
@@ -150,8 +149,7 @@ exports.handler = async (event, context) => {
       headers,
       body: JSON.stringify({
         success: false,
-        error: 'Failed to fetch gallery data',
-        message: error.message
+        error: 'Failed to fetch gallery data'
       })
     };
   }

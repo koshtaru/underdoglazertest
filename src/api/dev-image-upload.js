@@ -1,15 +1,13 @@
-// Development-only image upload handler
-// This calls the local Netlify function for consistency with production
+import { auth } from '../config/firebase';
 
 export async function handleDevImageUpload(imageData, originalName, metadata = {}) {
-  console.log('Dev image upload handler - calling local Netlify function');
-  
   try {
-    // Call the same API endpoint that production uses, but via proxy
+    const token = await auth.currentUser?.getIdToken();
     const response = await fetch('/api/image-upload', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
       },
       body: JSON.stringify({
         imageData,
@@ -28,11 +26,7 @@ export async function handleDevImageUpload(imageData, originalName, metadata = {
       throw new Error(error.error || 'Upload failed');
     }
     
-    const result = await response.json();
-    console.log('✅ Dev upload completed via API:', result.data?.filename);
-    
-    return result;
-    
+    return await response.json();
   } catch (error) {
     console.error('Dev image upload error:', error);
     throw error;

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Upload, GripVertical } from 'lucide-react';
 import { useGallery } from '../../contexts/GalleryContext';
+import { auth } from '../../config/firebase';
 import {
   DndContext,
   closestCenter,
@@ -413,9 +414,13 @@ function AdminGallery() {
     // Save to Firestore
     try {
       const newOrderIds = newOrder.map(img => img.id);
+      const token = await auth.currentUser?.getIdToken();
       const response = await fetch('/.netlify/functions/gallery-update', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           action: 'reorder',
           updatedData: { newOrder: newOrderIds }

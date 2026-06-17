@@ -92,9 +92,29 @@ function getStorage() {
   }
 }
 
+// Verify a Firebase ID token from an Authorization: Bearer <token> header.
+// Throws with statusCode 401 on missing/invalid token.
+async function verifyAuthToken(authHeader) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    const err = new Error('Unauthorized');
+    err.statusCode = 401;
+    throw err;
+  }
+  const token = authHeader.slice(7);
+  try {
+    if (!app) initializeFirebase();
+    return await admin.auth().verifyIdToken(token);
+  } catch {
+    const err = new Error('Unauthorized');
+    err.statusCode = 401;
+    throw err;
+  }
+}
+
 module.exports = {
   initializeFirebase,
   getFirestore,
   getStorage,
+  verifyAuthToken,
   admin
 };
