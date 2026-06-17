@@ -1,4 +1,4 @@
-const { getFirestore, getStorage } = require('./firebase-admin');
+const { getFirestore, getStorage, verifyAuthToken } = require('./firebase-admin');
 
 /**
  * Migrate gallery images from Firestore base64 to Firebase Storage URLs
@@ -48,9 +48,10 @@ exports.handler = async (event, context) => {
   console.log('🚀 Starting Firebase Storage migration...');
 
   // CORS headers
+  const allowedOrigin = process.env.ALLOWED_ORIGIN || 'https://underdoglazer.com';
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json'
   };
@@ -60,6 +61,11 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    // Require a valid admin Firebase ID token. This endpoint mutates Firestore
+    // and Storage via the Admin SDK (which bypasses security rules), so it must
+    // enforce authentication itself.
+    await verifyAuthToken(event.headers.authorization);
+
     const db = getFirestore();
     const bucket = getStorage();
 
@@ -234,6 +240,13 @@ exports.handler = async (event, context) => {
 
   } catch (error) {
     console.error('❌ Migration error:', error);
+    if (error.statusCode === 401) {
+      return {
+        statusCode: 401,
+        headers,
+        body: JSON.stringify({ success: false, error: 'Unauthorized' })
+      };
+    }
     return {
       statusCode: 500,
       headers,

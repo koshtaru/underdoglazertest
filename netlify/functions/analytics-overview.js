@@ -1,4 +1,8 @@
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const { verifyAuthToken } = require('./firebase-admin');
 
 // Initialize the Analytics Data API client
 let analyticsDataClient;
@@ -57,6 +61,9 @@ export const handler = async (event, context) => {
   }
 
   try {
+    // Analytics data is for the authenticated admin dashboard only.
+    await verifyAuthToken(event.headers.authorization);
+
     // Parse query parameters
     const { period = '7d' } = event.queryStringParameters || {};
     
@@ -194,7 +201,15 @@ export const handler = async (event, context) => {
       details: error.details,
       stack: error.stack
     });
-    
+
+    if (error.statusCode === 401) {
+      return {
+        statusCode: 401,
+        headers,
+        body: JSON.stringify({ success: false, error: 'Unauthorized' }),
+      };
+    }
+
     return {
       statusCode: 500,
       headers,

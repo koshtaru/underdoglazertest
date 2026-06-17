@@ -1,4 +1,8 @@
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const { verifyAuthToken } = require('./firebase-admin');
 
 export const handler = async (event, context) => {
   const headers = {
@@ -21,6 +25,10 @@ export const handler = async (event, context) => {
   }
 
   try {
+    // This debug endpoint exposes configuration details, so it must require
+    // an authenticated admin token.
+    await verifyAuthToken(event.headers.authorization);
+
     // Debug info
     const debug = {
       hasPropertyId: !!process.env.GA_PROPERTY_ID,
@@ -91,6 +99,13 @@ export const handler = async (event, context) => {
 
   } catch (error) {
     console.error('Analytics test error:', error);
+    if (error.statusCode === 401) {
+      return {
+        statusCode: 401,
+        headers,
+        body: JSON.stringify({ success: false, error: 'Unauthorized' }),
+      };
+    }
     return {
       statusCode: 500,
       headers,

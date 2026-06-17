@@ -1,4 +1,6 @@
 // API Service Layer for Analytics Data
+import { auth } from '../config/firebase';
+
 class ApiService {
   constructor() {
     this.baseUrl = '/.netlify/functions';
@@ -33,10 +35,14 @@ class ApiService {
 
       console.log(`Fetching analytics data from: ${url.pathname}${url.search}`);
 
+      // Analytics endpoints require an authenticated admin token.
+      const token = await auth.currentUser?.getIdToken();
+
       const response = await fetch(url.toString(), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
           ...options.headers,
         },
       });
@@ -178,9 +184,13 @@ class ApiService {
   // Health check for API endpoints
   async healthCheck() {
     try {
+      const token = await auth.currentUser?.getIdToken();
       const response = await fetch(`${this.baseUrl}/analytics-overview-v2?period=1d`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        }
       });
       
       return {

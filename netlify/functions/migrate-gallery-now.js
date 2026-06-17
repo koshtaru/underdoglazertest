@@ -1,4 +1,4 @@
-const { getFirestore } = require('./firebase-admin');
+const { getFirestore, verifyAuthToken } = require('./firebase-admin');
 
 const GALLERY_COLLECTION = 'gallery';
 const GALLERY_DOC = 'data';
@@ -9,9 +9,10 @@ exports.handler = async (event, context) => {
   console.log('🚀 Starting Firestore migration from single document to individual documents...');
   
   // Set CORS headers
+  const allowedOrigin = process.env.ALLOWED_ORIGIN || 'https://underdoglazer.com';
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json'
   };
@@ -21,6 +22,11 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    // Require a valid admin Firebase ID token. This endpoint writes to Firestore
+    // via the Admin SDK (which bypasses security rules), so it must enforce
+    // authentication itself.
+    await verifyAuthToken(event.headers.authorization);
+
     const db = getFirestore();
     
     // Step 1: Check if migration is already done
@@ -124,7 +130,10 @@ exports.handler = async (event, context) => {
     let errorMessage = 'Failed to migrate gallery data';
     let statusCode = 500;
 
-    if (error.message.includes('Firebase Admin credentials not configured')) {
+    if (error.statusCode === 401) {
+      errorMessage = 'Unauthorized';
+      statusCode = 401;
+    } else if (error.message.includes('Firebase Admin credentials not configured')) {
       errorMessage = 'Firebase Admin SDK not configured properly';
       statusCode = 503;
     } else if (error.message.includes('PERMISSION_DENIED')) {
