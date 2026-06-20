@@ -1635,6 +1635,24 @@ a:focus {
   min-width: 130px;
 }
 
+/* Landscape phones / short viewports: keep the side-by-side layout but offset
+   below the header and shrink the logo so it isn't clipped. */
+@media (min-width: 768px) and (max-height: 600px) {
+  .hero {
+    min-height: 100svh;
+    height: auto;
+    padding-top: var(--header-height);
+    box-sizing: border-box;
+  }
+  .hero__split {
+    padding: var(--space-sm) 0;
+  }
+  .hero__logo {
+    height: clamp(150px, 56vh, 300px);
+    max-width: 46vw;
+  }
+}
+
 /* Mobile: stack vertically, logo centered and large */
 @media (max-width: 767px) {
   .hero {
