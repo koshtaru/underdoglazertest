@@ -1637,16 +1637,28 @@ a:focus {
 
 /* Mobile: stack vertically, logo centered and large */
 @media (max-width: 767px) {
+  .hero {
+    /* The hero is not wrapped in .main, so offset it below the fixed header
+       and let it grow instead of clipping the logo on short viewports. */
+    min-height: 100svh;
+    height: auto;
+    padding-top: var(--header-height);
+    box-sizing: border-box;
+  }
   .hero__split {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    gap: var(--space-lg);
+    gap: var(--space-md);
+    padding: var(--space-lg) 0 var(--space-xl);
   }
   .hero__logo {
-    width: clamp(280px, 82vw, 400px);
-    height: auto;
-    max-width: 90vw;
+    /* Size by height so the whole logo always fits below the header while
+       leaving room for the tagline and buttons (balanced prominence). */
+    width: auto;
+    height: clamp(240px, 46vh, 380px);
+    max-width: 86vw;
   }
   .hero__tagline {
     max-width: 100%;
@@ -1728,17 +1740,30 @@ a:focus {
   .how-steps::before {
     display: none;
   }
+  /* Circle on the left; title and body stacked to its right so the title
+     gets the full width and no longer wraps awkwardly. */
   .how-step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--space-md);
+    row-gap: 4px;
+    align-items: start;
     text-align: left;
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-md);
   }
   .how-step__circle {
-    flex-shrink: 0;
+    grid-column: 1;
+    grid-row: 1 / span 2;
     margin: 0;
+    flex-shrink: 0;
+  }
+  .how-step__title {
+    grid-column: 2;
+    grid-row: 1;
+    margin-bottom: 0;
   }
   .how-step__body {
+    grid-column: 2;
+    grid-row: 2;
     margin: 0;
     max-width: 100%;
   }
