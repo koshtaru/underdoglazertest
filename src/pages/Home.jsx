@@ -6,7 +6,9 @@ import { Helmet } from 'react-helmet-async';
 // video on phones (it's a large file and mobile autoplay is unreliable) — a
 // static background image is shown there instead.
 function useIsDesktop() {
-  const query = '(min-width: 768px)';
+  // Require a tall-enough viewport too, so landscape phones (wide but short)
+  // get the static background instead of downloading the large video.
+  const query = '(min-width: 768px) and (min-height: 500px)';
   const [isDesktop, setIsDesktop] = useState(
     () => typeof window !== 'undefined' && window.matchMedia(query).matches
   );
