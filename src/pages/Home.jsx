@@ -1,7 +1,29 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
+// Only true on tablet/desktop widths. Used to avoid loading the hero background
+// video on phones (it's a large file and mobile autoplay is unreliable) — a
+// static background image is shown there instead.
+function useIsDesktop() {
+  const query = '(min-width: 768px)';
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(query).matches
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    const onChange = (e) => setIsDesktop(e.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
+
+  return isDesktop;
+}
+
 function Home() {
+  const isDesktop = useIsDesktop();
+
   const serviceList = [
     { title: 'Custom gifts & personal pieces', desc: 'Wedding gifts, memorials, anniversary items — made for one person, not a shelf.' },
     { title: 'Business branding', desc: 'Cards, patches, signage, and swag that actually looks like your brand.' },
@@ -43,17 +65,20 @@ function Home() {
       </Helmet>
       {/* Hero Section — Logo First */}
       <section className="hero" aria-labelledby="hero-title">
-        <video
-          className="hero__video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/img/hero-background.jpg"
-        >
-          <source src="/img/hero-background.mp4" type="video/mp4" />
-          <source src="/img/hero-background.webm" type="video/webm" />
-        </video>
+        {/* Desktop only: phones fall back to the .hero CSS background image
+            (set in global.css) instead of downloading the large video. */}
+        {isDesktop && (
+          <video
+            className="hero__video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/img/hero-background.jpg"
+          >
+            <source src="/img/hero-background.mp4" type="video/mp4" />
+          </video>
+        )}
 
         <div className="hero__video-overlay"></div>
 
