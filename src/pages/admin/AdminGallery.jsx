@@ -104,7 +104,8 @@ function AdminGallery() {
     error: apiError,
     updateImage,
     deleteImage,
-    uploadImage: apiUploadImage
+    uploadImage: apiUploadImage,
+    refetch
   } = useGallery();
 
   const [editingImage, setEditingImage] = useState(null);
@@ -125,6 +126,12 @@ function AdminGallery() {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
+
+  // Re-fetch with the admin token on mount so hidden images are included
+  // (the initial app-load fetch may have run before the admin was authenticated).
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   // Set error state from API
   useEffect(() => {

@@ -1,4 +1,4 @@
-const { getFirestore } = require('./firebase-admin');
+const { getFirestore, verifyAuthToken } = require('./firebase-admin');
 
 // Read gallery data from Firestore (v2: individual documents)
 async function readGalleryData() {
@@ -109,7 +109,7 @@ exports.handler = async (event, context) => {
   
   const headers = {
     'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || 'https://underdoglazer.com',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json'
   };
@@ -127,17 +127,34 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    // Optional auth: an authenticated admin sees every image (including hidden
+    // ones) so the dashboard can manage them. Anonymous/public callers only
+    // receive visible images.
+    let isAdmin = false;
+    try {
+      await verifyAuthToken(event.headers.authorization);
+      isAdmin = true;
+    } catch {
+      isAdmin = false;
+    }
+
     console.log('Fetching gallery data...');
     const galleryData = await readGalleryData();
-    
-    console.log(`Returning ${galleryData.images?.length || 0} images`);
-    
+
+    const images = Array.isArray(galleryData.images) ? galleryData.images : [];
+    const responseImages = isAdmin
+      ? images
+      : images.filter(img => img.visible !== false);
+
+    console.log(`Returning ${responseImages.length} images (admin: ${isAdmin})`);
+
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
         success: true,
         ...galleryData,
+        images: responseImages,
         lastFetched: new Date().toISOString()
       })
     };

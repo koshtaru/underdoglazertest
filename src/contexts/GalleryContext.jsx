@@ -19,7 +19,8 @@ export const GalleryProvider = ({ children }) => {
     deleteImage,
     toggleImageVisibility,
     uploadImage,
-    resetToDefaults: resetGalleryData
+    resetToDefaults: resetGalleryData,
+    refetch
   } = useGalleryStorage();
 
   // Computed values that will re-render components when galleryImages changes
@@ -59,7 +60,8 @@ export const GalleryProvider = ({ children }) => {
     getAllImages,
     getVisibleImages,
     getImagesByCategory,
-    resetGalleryData
+    resetGalleryData,
+    refetch
   }), [
     galleryImages,
     allImages,
@@ -75,7 +77,8 @@ export const GalleryProvider = ({ children }) => {
     getAllImages,
     getVisibleImages,
     getImagesByCategory,
-    resetGalleryData
+    resetGalleryData,
+    refetch
   ]);
 
   return (

@@ -18,7 +18,7 @@ import '../../styles/admin.css';
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { currentUser, userRole, logout } = useAuth();
+  const { currentUser, userRole, logout, hasPermission } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -30,43 +30,42 @@ const AdminLayout = () => {
     }
   };
 
+  // requiredRole mirrors the access control enforced by the routes in App.jsx.
   const navigation = [
     {
       name: 'Dashboard',
       href: '/admin/dashboard',
-      icon: Home
+      icon: Home,
+      requiredRole: 'viewer'
     },
     {
       name: 'Analytics',
       href: '/admin/analytics',
-      icon: BarChart3
+      icon: BarChart3,
+      requiredRole: 'viewer'
     },
     {
       name: 'Gallery Management',
       href: '/admin/gallery',
-      icon: Images
+      icon: Images,
+      requiredRole: 'content-manager'
     },
     {
       name: 'User Management',
       href: '/admin/users',
-      icon: Users
+      icon: Users,
+      requiredRole: 'admin'
     },
     {
       name: 'Settings',
       href: '/admin/settings',
-      icon: Settings
+      icon: Settings,
+      requiredRole: 'admin'
     }
   ];
 
-  // All authenticated users have access to all navigation items
-  const filteredNavigation = navigation;
-
-  // Debug logging
-  console.log('AdminLayout Debug:', {
-    currentUser: currentUser?.email,
-    userRole,
-    totalNavItems: navigation.length
-  });
+  // Only show items the current user's role can actually access.
+  const filteredNavigation = navigation.filter(item => hasPermission(item.requiredRole));
 
   return (
     <div className="admin-layout" style={{ 
