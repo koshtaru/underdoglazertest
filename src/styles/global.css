@@ -1025,6 +1025,50 @@ a:focus {
   }
 }
 
+/* Lightweight image lightbox for the homepage "Our Work" cards — sized to the
+   image with a compact caption underneath (vs the gallery's full detail panel). */
+.work-lightbox {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 90vw;
+  max-height: 90vh;
+  margin: 0;
+  background-color: var(--clr-bg-light);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  cursor: default;
+}
+
+.work-lightbox__img {
+  display: block;
+  max-width: 90vw;
+  max-height: 78vh;
+  object-fit: contain;
+  background-color: var(--clr-bg);
+}
+
+.work-lightbox__caption {
+  padding: var(--space-sm) var(--space-md);
+  text-align: center;
+}
+
+.work-lightbox__title {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--clr-text);
+}
+
+.work-lightbox__detail {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--font-size-sm);
+  color: var(--clr-accent);
+  letter-spacing: 0.03em;
+}
+
 /* Forms */
 .form {
   max-width: 600px;
