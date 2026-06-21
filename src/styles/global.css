@@ -492,6 +492,21 @@ a:focus {
   color: var(--clr-text-muted);
 }
 
+/* Landscape / short viewports: these page heroes are a fixed 60vh band with no
+   offset for the fixed header, so on short screens the header hid the <h1>
+   title. Size them to their content and start below the header instead. */
+@media (max-height: 600px) {
+  .about-hero,
+  .gallery-hero,
+  .contact-hero {
+    height: auto !important;
+    min-height: 0 !important;
+    padding-top: calc(var(--header-height) + var(--space-md)) !important;
+    padding-bottom: var(--space-md) !important;
+    box-sizing: border-box;
+  }
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
