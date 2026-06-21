@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 function Footer() {
   const { pathname } = useLocation();
-  const showBand = pathname === '/' || pathname === '/gallery';
+  const showBand = ['/', '/gallery', '/about', '/contact'].includes(pathname);
 
   return (
     <footer className="site-footer">
