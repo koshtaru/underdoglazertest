@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
@@ -171,24 +170,7 @@ function About() {
           </div>
         )}
       </section>
-
-      {/* CTA Section */}
-      <section className="section" aria-labelledby="cta-title">
-        <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
-            <h2 className="section-title" id="cta-title">Ready to Bring Your Vision to Life?</h2>
-            <p className="section-subtitle">
-              Whether it's a single custom piece or a large production run, we're here to help you create something extraordinary.
-            </p>
-            <div style={{ display: 'flex', gap: 'var(--space-md)', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/contact" className="btn btn-primary">
-                Request Free Quote
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>    
+    </>
   );
 }
 
