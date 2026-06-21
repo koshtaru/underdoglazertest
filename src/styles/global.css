@@ -577,6 +577,15 @@ a:focus {
   padding-top: var(--space-lg);
 }
 
+/* Gallery closing CTA: headline/subtext only — flow it into the green footer
+   band (rendered just below) so they read as one combined CTA. */
+.gallery-cta {
+  padding-bottom: var(--space-md);
+}
+.gallery-cta .section-subtitle {
+  margin-bottom: 0;
+}
+
 .section-title {
   text-align: center;
   margin-bottom: var(--space-xl);
