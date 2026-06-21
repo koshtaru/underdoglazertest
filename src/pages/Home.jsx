@@ -50,6 +50,11 @@ function Home() {
       title: 'Custom Drinkware Collection',
       detail: 'Multi-Surface Engraving',
     },
+    {
+      src: '/img/gallery/gifts-happier-with-you-koozie.jpg',
+      title: 'Personal Photo Koozie',
+      detail: 'Photo Engraving · Custom Keepsake',
+    },
   ];
 
   const handleHowItWorksClick = (e) => {
