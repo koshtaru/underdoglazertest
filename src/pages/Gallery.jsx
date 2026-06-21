@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 function Gallery() {
@@ -322,19 +321,14 @@ function Gallery() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="section" aria-labelledby="cta-title">
+      {/* CTA Section — headline only; the green footer band below provides the button */}
+      <section className="section gallery-cta" aria-labelledby="cta-title">
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
             <h2 className="section-title" id="cta-title">Ready to Create Something Amazing?</h2>
             <p className="section-subtitle">
               Let's bring your ideas to life with precision laser engraving
             </p>
-            <div style={{ display: 'flex', gap: 'var(--space-md)', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/contact" className="btn btn-primary">
-                Get a Quote
-              </Link>
-            </div>
           </div>
         </div>
       </section>
