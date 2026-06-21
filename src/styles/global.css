@@ -495,6 +495,21 @@ a:focus {
   color: var(--clr-text-muted);
 }
 
+/* Landscape / short viewports: the inner-page hero titles are sized for full
+   desktop (up to 48px) but sit in a ~280px band, so scale them down and tighten
+   spacing. Only affects .hero__title/.hero__subtitle (About/Gallery/Contact);
+   the home hero uses .hero__tagline and is untouched. */
+@media (max-height: 600px) {
+  .hero__title {
+    font-size: clamp(1.6rem, 4.5vw, 2rem);
+    margin-bottom: var(--space-xs);
+  }
+  .hero__subtitle {
+    font-size: var(--font-size-base);
+    margin-bottom: 0;
+  }
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
