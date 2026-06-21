@@ -52,9 +52,9 @@ function Home() {
     },
   ];
 
-  const handleSeeWorkClick = (e) => {
+  const handleHowItWorksClick = (e) => {
     e.preventDefault();
-    document.getElementById('our-work')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -99,8 +99,8 @@ function Home() {
                 Custom laser engraving for people who care about the details.
               </p>
               <div className="hero__cta">
-                <a href="#our-work" className="btn btn-secondary" onClick={handleSeeWorkClick}>
-                  See Our Work
+                <a href="#how-it-works" className="btn btn-secondary" onClick={handleHowItWorksClick}>
+                  How It Works
                 </a>
                 <Link to="/contact" className="btn btn-primary">
                   Get a Quote
@@ -138,7 +138,7 @@ function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="section how-it-works" style={{ backgroundColor: 'var(--clr-bg-light)' }} aria-labelledby="how-title">
+      <section className="section how-it-works" id="how-it-works" style={{ backgroundColor: 'var(--clr-bg-light)', scrollMarginTop: 'var(--header-height)' }} aria-labelledby="how-title">
         <div className="container">
           <h2 className="section-title" id="how-title">How it works</h2>
           <p className="section-subtitle">Three steps. No guesswork.</p>
