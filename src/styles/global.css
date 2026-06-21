@@ -578,8 +578,10 @@ a:focus {
 }
 
 /* Gallery closing CTA: headline/subtext only — flow it into the green footer
-   band (rendered just below) so they read as one combined CTA. */
+   band (rendered just below) so they read as one combined CTA. Tight top padding
+   so it isn't separated from the grid by a big dead gap. */
 .gallery-cta {
+  padding-top: 0;
   padding-bottom: var(--space-md);
 }
 .gallery-cta .section-subtitle {
