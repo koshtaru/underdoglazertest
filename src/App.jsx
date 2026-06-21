@@ -31,7 +31,12 @@ function AppLayout() {
   useEffect(() => {
     analyticsService.trackPageView();
   }, [location]);
-  
+
+  // Start each page at the top on navigation (SPA route changes don't reset scroll).
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <>
       {!isAdminRoute && <Header />}
