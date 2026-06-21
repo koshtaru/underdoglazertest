@@ -572,6 +572,11 @@ a:focus {
   padding: var(--space-lg) 0;
 }
 
+/* Match About's hero-to-content gap to Gallery/Contact (~32px). */
+.about-hero + .section {
+  padding-top: var(--space-lg);
+}
+
 .section-title {
   text-align: center;
   margin-bottom: var(--space-xl);
