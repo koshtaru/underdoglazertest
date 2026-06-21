@@ -1824,7 +1824,7 @@ a:focus {
 
 .work-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-md);
 }
 
@@ -1887,9 +1887,18 @@ a:focus {
   letter-spacing: 0.03em;
 }
 
+@media (max-width: 900px) {
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* No hover on touch devices — keep the title/detail caption visible. */
+  .work-grid__overlay {
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 600px) {
   .work-grid {
-    grid-template-columns: 1fr;
     gap: var(--space-sm);
   }
 }
