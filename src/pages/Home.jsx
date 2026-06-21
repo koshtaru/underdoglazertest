@@ -25,6 +25,7 @@ function useIsDesktop() {
 
 function Home() {
   const isDesktop = useIsDesktop();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const serviceList = [
     { title: 'Custom gifts & personal pieces', desc: 'Wedding gifts, memorials, anniversary items — made for one person, not a shelf.' },
@@ -61,6 +62,21 @@ function Home() {
     e.preventDefault();
     document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  // Close the lightbox on Escape and lock background scroll while open.
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === 'Escape') setSelectedImage(null);
+    };
+    if (selectedImage) {
+      document.addEventListener('keydown', handleKeyPress);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedImage]);
 
   return (
     <>
@@ -124,7 +140,20 @@ function Home() {
 
           <div className="work-grid">
             {workSamples.map((item, i) => (
-              <div key={i} className="work-grid__item">
+              <div
+                key={i}
+                className="work-grid__item"
+                onClick={() => setSelectedImage(item)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedImage(item);
+                  }
+                }}
+                aria-label={`View ${item.title}`}
+              >
                 <img src={item.src} alt={item.title} loading="lazy" />
                 <div className="work-grid__overlay">
                   <p className="work-grid__overlay-title">{item.title}</p>
@@ -205,6 +234,33 @@ function Home() {
         </div>
       </section>
 
+      {/* Lightbox for Our Work images */}
+      {selectedImage && (
+        <div
+          className="modal"
+          onClick={() => setSelectedImage(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="work-modal-title"
+        >
+          <div className="modal__content" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal__close"
+              onClick={() => setSelectedImage(null)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <div className="modal__image">
+              <img src={selectedImage.src} alt={selectedImage.title} />
+            </div>
+            <div className="modal__info">
+              <h3 className="modal__title" id="work-modal-title">{selectedImage.title}</h3>
+              <p className="modal__description">{selectedImage.detail}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
