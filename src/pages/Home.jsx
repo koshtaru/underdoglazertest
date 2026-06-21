@@ -243,7 +243,7 @@ function Home() {
           aria-modal="true"
           aria-labelledby="work-modal-title"
         >
-          <div className="modal__content" onClick={(e) => e.stopPropagation()}>
+          <figure className="work-lightbox" onClick={(e) => e.stopPropagation()}>
             <button
               className="modal__close"
               onClick={() => setSelectedImage(null)}
@@ -251,14 +251,12 @@ function Home() {
             >
               ×
             </button>
-            <div className="modal__image">
-              <img src={selectedImage.src} alt={selectedImage.title} />
-            </div>
-            <div className="modal__info">
-              <h3 className="modal__title" id="work-modal-title">{selectedImage.title}</h3>
-              <p className="modal__description">{selectedImage.detail}</p>
-            </div>
-          </div>
+            <img className="work-lightbox__img" src={selectedImage.src} alt={selectedImage.title} />
+            <figcaption className="work-lightbox__caption">
+              <span className="work-lightbox__title" id="work-modal-title">{selectedImage.title}</span>
+              <span className="work-lightbox__detail">{selectedImage.detail}</span>
+            </figcaption>
+          </figure>
         </div>
       )}
     </>
