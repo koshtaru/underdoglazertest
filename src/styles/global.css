@@ -381,9 +381,10 @@ a:focus {
 .gallery-hero {
   display: flex;
   align-items: center;
-  height: calc(60vh - 42px) !important;
-  min-height: calc(60vh - 42px) !important;
-  background: 
+  min-height: max(280px, 56vh);
+  padding-top: var(--header-height);
+  box-sizing: border-box;
+  background:
     linear-gradient(rgba(18, 18, 18, 0.75), rgba(30, 30, 30, 0.85)),
     url('/img/gallery-1.png') center/cover no-repeat;
   position: relative;
@@ -415,9 +416,10 @@ a:focus {
 .about-hero {
   display: flex;
   align-items: center;
-  height: calc(60vh - 42px) !important;
-  min-height: calc(60vh - 42px) !important;
-  background: 
+  min-height: max(280px, 56vh);
+  padding-top: var(--header-height);
+  box-sizing: border-box;
+  background:
     linear-gradient(rgba(18, 18, 18, 0.75), rgba(30, 30, 30, 0.85)),
     url('/img/gallery-2.jpg') center/cover no-repeat;
   position: relative;
@@ -449,9 +451,10 @@ a:focus {
 .contact-hero {
   display: flex;
   align-items: center;
-  height: calc(60vh - 42px) !important;
-  min-height: calc(60vh - 42px) !important;
-  background: 
+  min-height: max(280px, 56vh);
+  padding-top: var(--header-height);
+  box-sizing: border-box;
+  background:
     linear-gradient(rgba(18, 18, 18, 0.75), rgba(30, 30, 30, 0.85)),
     url('/img/gallery-3.jpg') center/cover no-repeat;
   position: relative;
@@ -490,21 +493,6 @@ a:focus {
   font-size: var(--font-size-lg);
   margin-bottom: var(--space-xl);
   color: var(--clr-text-muted);
-}
-
-/* Landscape / short viewports: these page heroes are a fixed 60vh band with no
-   offset for the fixed header, so on short screens the header hid the <h1>
-   title. Size them to their content and start below the header instead. */
-@media (max-height: 600px) {
-  .about-hero,
-  .gallery-hero,
-  .contact-hero {
-    height: auto !important;
-    min-height: 0 !important;
-    padding-top: calc(var(--header-height) + var(--space-md)) !important;
-    padding-bottom: var(--space-md) !important;
-    box-sizing: border-box;
-  }
 }
 
 /* Buttons */
