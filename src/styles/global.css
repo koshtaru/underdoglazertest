@@ -321,6 +321,14 @@ a:focus {
   min-height: calc(60vh - 42px);
 }
 
+/* A full-bleed page hero already clears the fixed header, so the following
+   .main must not re-apply the header offset (it would double it and leave a
+   large gap below the hero). */
+.gallery-hero + .main,
+.contact-hero + .main {
+  margin-top: 0;
+}
+
 /* Hero Section */
 .hero {
   display: flex;
