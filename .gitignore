@@ -49,3 +49,4 @@ CLEANED_FIREBASE_JSON.md
 
 # Cursor IDE (may contain API keys)
 .cursor/
+scripts/set-admin-role.cjs
