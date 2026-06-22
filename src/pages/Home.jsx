@@ -26,6 +26,7 @@ function useIsDesktop() {
 function Home() {
   const isDesktop = useIsDesktop();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [displayedSamples, setDisplayedSamples] = useState(null);
 
   const serviceList = [
     { title: 'Custom gifts & personal pieces', desc: 'Wedding gifts, memorials, anniversary items — made for one person, not a shelf.' },
@@ -57,6 +58,27 @@ function Home() {
       detail: 'Photo Engraving · Custom Keepsake',
     },
   ];
+
+  // Fetch featured images from Firestore to populate the showcase grid.
+  // Falls back to the hardcoded workSamples if the API fails or returns nothing.
+  useEffect(() => {
+    const endpoint = import.meta.env.DEV
+      ? '/api/gallery-get?featured=true'
+      : '/.netlify/functions/gallery-get?featured=true';
+
+    fetch(endpoint)
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(data => {
+        if (data.success && Array.isArray(data.images) && data.images.length > 0) {
+          setDisplayedSamples(data.images.map(img => ({
+            src: img.src,
+            title: img.title,
+            detail: [img.materials, img.technique].filter(Boolean).join(' · '),
+          })));
+        }
+      })
+      .catch(() => { /* keep fallback */ });
+  }, []);
 
   const handleHowItWorksClick = (e) => {
     e.preventDefault();
@@ -139,7 +161,7 @@ function Home() {
           <p className="section-subtitle">Real projects. Real people.</p>
 
           <div className="work-grid">
-            {workSamples.map((item, i) => (
+            {(displayedSamples ?? workSamples).map((item, i) => (
               <div
                 key={i}
                 className="work-grid__item"

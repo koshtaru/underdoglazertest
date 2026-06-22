@@ -142,9 +142,11 @@ exports.handler = async (event, context) => {
     const galleryData = await readGalleryData();
 
     const images = Array.isArray(galleryData.images) ? galleryData.images : [];
-    const responseImages = isAdmin
-      ? images
-      : images.filter(img => img.visible !== false);
+    const featuredOnly = event.queryStringParameters?.featured === 'true';
+    const visibleImages = isAdmin ? images : images.filter(img => img.visible !== false);
+    const responseImages = featuredOnly
+      ? visibleImages.filter(img => img.featured === true)
+      : visibleImages;
 
     console.log(`Returning ${responseImages.length} images (admin: ${isAdmin})`);
 
