@@ -163,7 +163,6 @@ function Gallery() {
   // Handle page change
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Generate page numbers to display
