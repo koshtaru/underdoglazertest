@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Upload, GripVertical } from 'lucide-react';
+import { Upload, GripVertical, Star } from 'lucide-react';
 import { useGallery } from '../../contexts/GalleryContext';
 import { auth } from '../../config/firebase';
 import {
@@ -23,7 +23,7 @@ import { CSS } from '@dnd-kit/utilities';
 import '../../styles/admin.css';
 
 // Sortable Gallery Card Component
-function SortableGalleryCard({ image, arrangeMode, onEdit, onDelete, activeId }) {
+function SortableGalleryCard({ image, arrangeMode, onEdit, onDelete, onToggleFeatured, activeId }) {
   const {
     attributes,
     listeners,
@@ -88,6 +88,18 @@ function SortableGalleryCard({ image, arrangeMode, onEdit, onDelete, activeId })
               onClick={() => onDelete(image)}
             >
               Delete
+            </button>
+            <button
+              className="btn btn--small"
+              title={image.featured ? 'Remove from homepage showcase' : 'Add to homepage showcase'}
+              onClick={() => onToggleFeatured(image)}
+              style={{ padding: '0.35rem', lineHeight: 1 }}
+            >
+              <Star
+                size={16}
+                fill={image.featured ? 'var(--clr-accent)' : 'none'}
+                color={image.featured ? 'var(--clr-accent)' : 'currentColor'}
+              />
             </button>
           </div>
         )}
@@ -182,6 +194,21 @@ function AdminGallery() {
     } catch (err) {
       console.error('Failed to save:', err);
       setError('Failed to save changes');
+    }
+  };
+
+  const handleToggleFeatured = async (image) => {
+    try {
+      const success = await updateImage(image.id, { featured: !image.featured });
+      if (success) {
+        setSuccessMessage(image.featured ? `Removed "${image.title}" from homepage showcase` : `Added "${image.title}" to homepage showcase`);
+        setTimeout(() => setSuccessMessage(''), 3000);
+      } else {
+        setError('Failed to update featured status');
+      }
+    } catch (err) {
+      console.error('Failed to toggle featured:', err);
+      setError('Failed to update featured status');
     }
   };
 
@@ -547,6 +574,7 @@ function AdminGallery() {
                 activeId={activeId}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                onToggleFeatured={handleToggleFeatured}
               />
             ))}
           </div>

@@ -81,6 +81,7 @@ async function addImageToGallery(imageData, storageUrl, filename) {
         storagePath: `gallery/${filename}`,
         uploadDate: new Date().toISOString().split('T')[0],
         visible: true,
+        featured: false,
         documentType: 'image',
         storageEnabled: true
       };
@@ -116,6 +117,7 @@ async function addImageToGallery(imageData, storageUrl, filename) {
         storagePath: `gallery/${filename}`,
         uploadDate: new Date().toISOString().split('T')[0],
         visible: true,
+        featured: false,
         storageEnabled: true
       };
 
