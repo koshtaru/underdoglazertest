@@ -157,7 +157,6 @@ function Gallery() {
   const handleCategoryChange = (categoryId) => {
     setActiveCategory(categoryId);
     setCurrentPage(1);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Handle page change
