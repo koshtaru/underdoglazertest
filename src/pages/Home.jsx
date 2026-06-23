@@ -27,6 +27,7 @@ function Home() {
   const isDesktop = useIsDesktop();
   const [selectedImage, setSelectedImage] = useState(null);
   const [displayedSamples, setDisplayedSamples] = useState(null);
+  const [samplesLoading, setSamplesLoading] = useState(true);
 
   const serviceList = [
     { title: 'Custom gifts & personal pieces', desc: 'Wedding gifts, memorials, anniversary items — made for one person, not a shelf.' },
@@ -77,7 +78,8 @@ function Home() {
           })));
         }
       })
-      .catch(() => { /* keep fallback */ });
+      .catch(() => { /* keep fallback */ })
+      .finally(() => setSamplesLoading(false));
   }, []);
 
   const handleHowItWorksClick = (e) => {
@@ -161,7 +163,7 @@ function Home() {
           <p className="section-subtitle">Real projects. Real people.</p>
 
           <div className="work-grid">
-            {(displayedSamples ?? workSamples).map((item, i) => (
+            {(samplesLoading ? [] : (displayedSamples ?? workSamples)).map((item, i) => (
               <div
                 key={i}
                 className="work-grid__item"
