@@ -18,7 +18,7 @@ import '../../styles/admin.css';
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { currentUser, userRole, logout, hasPermission } = useAuth();
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -32,40 +32,12 @@ const AdminLayout = () => {
 
   // requiredRole mirrors the access control enforced by the routes in App.jsx.
   const navigation = [
-    {
-      name: 'Dashboard',
-      href: '/admin/dashboard',
-      icon: Home,
-      requiredRole: 'viewer'
-    },
-    {
-      name: 'Analytics',
-      href: '/admin/analytics',
-      icon: BarChart3,
-      requiredRole: 'viewer'
-    },
-    {
-      name: 'Gallery Management',
-      href: '/admin/gallery',
-      icon: Images,
-      requiredRole: 'content-manager'
-    },
-    {
-      name: 'User Management',
-      href: '/admin/users',
-      icon: Users,
-      requiredRole: 'admin'
-    },
-    {
-      name: 'Settings',
-      href: '/admin/settings',
-      icon: Settings,
-      requiredRole: 'admin'
-    }
+    { name: 'Dashboard', href: '/admin/dashboard', icon: Home },
+    { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
+    { name: 'Gallery Management', href: '/admin/gallery', icon: Images },
+    { name: 'User Management', href: '/admin/users', icon: Users },
+    { name: 'Settings', href: '/admin/settings', icon: Settings }
   ];
-
-  // Only show items the current user's role can actually access.
-  const filteredNavigation = navigation.filter(item => hasPermission(item.requiredRole));
 
   return (
     <div className="admin-layout" style={{ 
@@ -106,14 +78,14 @@ const AdminLayout = () => {
                 <X style={{ height: '1.5rem', width: '1.5rem' }} />
               </button>
             </div>
-            <SidebarContent navigation={filteredNavigation} />
+            <SidebarContent navigation={navigation} />
           </div>
         </div>
       )}
 
       {/* Desktop sidebar */}
       <div className="admin-sidebar-desktop" style={{ backgroundColor: 'var(--clr-bg-light)', borderRight: '1px solid var(--clr-border)' }}>
-        <SidebarContent navigation={filteredNavigation} />
+        <SidebarContent navigation={navigation} />
       </div>
 
       {/* Main content wrapper */}
@@ -194,7 +166,7 @@ const AdminLayout = () => {
                   {currentUser?.email}
                 </div>
                 <div style={{ fontSize: '0.75rem', textTransform: 'capitalize', color: 'var(--clr-text-muted)' }}>
-                  {userRole}
+                  Admin
                 </div>
               </div>
               <ChevronDown style={{ height: '1rem', width: '1rem', color: 'var(--clr-text-muted)' }} />

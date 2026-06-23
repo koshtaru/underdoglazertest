@@ -59,12 +59,12 @@ function AppLayout() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="gallery" element={
-            <ProtectedRoute requiredRole="content-manager">
+            <ProtectedRoute>
               <AdminGallery />
             </ProtectedRoute>
           } />
           <Route path="users" element={
-            <ProtectedRoute requiredRole="admin">
+            <ProtectedRoute>
               <div className="p-8 text-center">
                 <h2 className="text-2xl font-bold text-gray-900">User Management</h2>
                 <p className="text-gray-600 mt-2">✅ Task 11 Complete - User management foundation ready for advanced features!</p>
@@ -72,7 +72,7 @@ function AppLayout() {
             </ProtectedRoute>
           } />
           <Route path="settings" element={
-            <ProtectedRoute requiredRole="admin">
+            <ProtectedRoute>
               <div className="p-8 text-center">
                 <h2 className="text-2xl font-bold text-gray-900">Settings</h2>
                 <p className="text-gray-600 mt-2">✅ Task 11 Complete - Settings framework ready for configuration features!</p>
