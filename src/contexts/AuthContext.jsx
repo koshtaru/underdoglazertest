@@ -135,16 +135,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {loading ? (
-        <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--clr-bg)' }}>
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 mx-auto" style={{ borderColor: 'var(--clr-accent)' }}></div>
-            <p className="mt-4 text-lg" style={{ color: 'var(--clr-text)' }}>Loading admin portal...</p>
-          </div>
-        </div>
-      ) : (
-        children
-      )}
+      {children}
     </AuthContext.Provider>
   );
 };
