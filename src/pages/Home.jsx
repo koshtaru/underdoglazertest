@@ -105,9 +105,9 @@ function Home() {
   return (
     <>
       <Helmet>
-        <title>Underdog Lazer — Custom Laser Engraving · Woodville, TX</title>
-        <meta name="description" content="Custom laser engraving for gifts, business branding, hat patches, and more. Based in Woodville, TX. Ships anywhere in the US." />
-        <meta property="og:title" content="Underdog Lazer — Custom Laser Engraving · Woodville, TX" />
+        <title>Underdog Lazer — Custom Laser Engraving · Fox Valley, WI</title>
+        <meta name="description" content="Custom laser engraving for gifts, business branding, hat patches, and more. Based in Fox Valley, WI. Ships anywhere in the US." />
+        <meta property="og:title" content="Underdog Lazer — Custom Laser Engraving · Fox Valley, WI" />
         <meta property="og:description" content="Custom laser engraving for gifts, business branding, hat patches, and more. Ships anywhere in the US." />
       </Helmet>
       {/* Hero Section — Logo First */}
@@ -222,7 +222,7 @@ function Home() {
               <div className="how-step__circle">3</div>
               <h3 className="how-step__title">Pick up or ship</h3>
               <p className="how-step__body">
-                Local pickup in Woodville, or shipped anywhere in the US. Most orders out within a week.
+                Local pickup in Fox Valley, or shipped anywhere in the US. Most orders out within a week.
               </p>
             </div>
           </div>

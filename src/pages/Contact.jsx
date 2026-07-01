@@ -164,7 +164,7 @@ function Contact() {
     <>
       <Helmet>
         <title>Get a Quote — Underdog Lazer</title>
-        <meta name="description" content="Request a custom laser engraving quote. Share your idea and I'll get back to you fast. Based in Woodville, TX — ships anywhere in the US." />
+        <meta name="description" content="Request a custom laser engraving quote. Share your idea and I'll get back to you fast. Based in Fox Valley, WI — ships anywhere in the US." />
         <meta property="og:title" content="Get a Quote — Underdog Lazer" />
         <meta property="og:description" content="Request a custom laser engraving quote. Share your idea and I'll get back to you fast." />
       </Helmet>

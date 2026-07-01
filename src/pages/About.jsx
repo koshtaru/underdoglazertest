@@ -23,9 +23,9 @@ function About() {
     <>
       <Helmet>
         <title>About — Underdog Lazer</title>
-        <meta name="description" content="Learn about Underdog Lazer — custom laser engraving based in Woodville, TX. Personal service, no minimums, ships anywhere in the US." />
+        <meta name="description" content="Learn about Underdog Lazer — custom laser engraving based in Fox Valley, WI. Personal service, no minimums, ships anywhere in the US." />
         <meta property="og:title" content="About — Underdog Lazer" />
-        <meta property="og:description" content="Custom laser engraving based in Woodville, TX. Personal service, no minimums." />
+        <meta property="og:description" content="Custom laser engraving based in Fox Valley, WI. Personal service, no minimums." />
       </Helmet>
       {/* About Hero Section */}
       <section className="about-hero" aria-labelledby="about-hero-title">

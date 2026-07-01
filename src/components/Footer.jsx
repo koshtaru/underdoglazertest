@@ -27,7 +27,7 @@ function Footer() {
           <div className="site-footer__cols">
             <div className="site-footer__col-brand">
               <p className="site-footer__brand-name">Underdog Lazer</p>
-              <p className="site-footer__brand-loc">Woodville, TX · Ships anywhere in the US</p>
+              <p className="site-footer__brand-loc">Fox Valley, WI · Ships anywhere in the US</p>
               <a href="mailto:info@underdoglazer.com" className="site-footer__brand-email">
                 info@underdoglazer.com
               </a>
