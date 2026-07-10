@@ -22,7 +22,7 @@ function Header() {
           <ul className="nav__list">
             <li><Link to="/" className={`nav__link ${isActive('/')}`}>Home</Link></li>
             <li><Link to="/about" className={`nav__link ${isActive('/about')}`}>About</Link></li>
-            <li><Link to="/gallery" className={`nav__link ${isActive('/gallery')}`}>Gallery</Link></li>
+            <li><Link to="/products" className={`nav__link ${isActive('/products')}`}>Products</Link></li>
             <li><Link to="/contact" className={`nav__link ${isActive('/contact')}`}>Contact</Link></li>
           </ul>
         </nav>
@@ -67,11 +67,11 @@ function Header() {
           </li>
           <li className="nav-mobile__item">
             <Link 
-              to="/gallery" 
-              className={`nav-mobile__link ${isActive('/gallery')}`}
+              to="/products" 
+              className={`nav-mobile__link ${isActive('/products')}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Gallery
+              Products
             </Link>
           </li>
           <li className="nav-mobile__item">

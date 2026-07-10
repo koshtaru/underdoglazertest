@@ -117,7 +117,7 @@ class ApiService {
           dateRange: { startDate: '7daysAgo', endDate: 'today' },
           topPages: [
             { path: '/', title: 'Home', pageviews: 0, users: 0, avgDuration: 0, bounceRate: 0 },
-            { path: '/gallery', title: 'Gallery', pageviews: 0, users: 0, avgDuration: 0, bounceRate: 0 },
+            { path: '/products', title: 'Products', pageviews: 0, users: 0, avgDuration: 0, bounceRate: 0 },
             { path: '/about', title: 'About', pageviews: 0, users: 0, avgDuration: 0, bounceRate: 0 },
             { path: '/contact', title: 'Contact', pageviews: 0, users: 0, avgDuration: 0, bounceRate: 0 },
           ],

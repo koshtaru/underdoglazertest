@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 function Footer() {
   const { pathname } = useLocation();
-  const showBand = ['/', '/gallery', '/about', '/contact'].includes(pathname);
+  const showBand = ['/', '/products', '/about', '/contact'].includes(pathname);
 
   return (
     <footer className="site-footer">
@@ -36,7 +36,7 @@ function Footer() {
               <p className="site-footer__col-head">Navigation</p>
               <nav aria-label="Footer navigation">
                 <Link to="/" className="site-footer__nav-link">Home</Link>
-                <Link to="/gallery" className="site-footer__nav-link">Gallery</Link>
+                <Link to="/products" className="site-footer__nav-link">Products</Link>
                 <Link to="/about" className="site-footer__nav-link">About</Link>
                 <Link to="/contact" className="site-footer__nav-link">Contact</Link>
               </nav>

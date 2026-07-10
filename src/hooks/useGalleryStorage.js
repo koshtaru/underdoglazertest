@@ -499,7 +499,7 @@ export const useGalleryStorage = () => {
   // Gallery page refresh effect - use existing data, don't re-fetch
   useEffect(() => {
     const refreshGalleryData = () => {
-      if (window.location.pathname === '/gallery' && isInitializedRef.current) {
+      if ((window.location.pathname === '/gallery' || window.location.pathname === '/products') && isInitializedRef.current) {
         console.log(`🔄 Instance ${instanceIdRef.current} Gallery page detected - using existing data (no re-fetch)`);
         // Don't re-fetch, just use the already loaded data to preserve admin edits
         console.log(`✅ Gallery using existing data:`, galleryImages[0]?.title);
@@ -513,7 +513,7 @@ export const useGalleryStorage = () => {
   // API save function - only admin pages should trigger API updates
   const saveToAPI = useCallback(async (action, imageId = null, updatedData = null) => {
     const isAdminPage = window.location.pathname.startsWith('/admin');
-    const isGalleryPage = window.location.pathname === '/gallery';
+    const isGalleryPage = window.location.pathname === '/gallery' || window.location.pathname === '/products';
     
     if (!isAdminPage || isGalleryPage) {
       console.log(`🚫 API SAVE BLOCKED - Instance ${instanceIdRef.current}: isAdmin=${isAdminPage}, isGallery=${isGalleryPage}`);

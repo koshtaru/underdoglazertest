@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+// Local fallback for `npm run dev` (Netlify functions are not available without `netlify dev`)
+import localGalleryData from '../../data/gallery-data.json';
+import ProductsHero from '../components/products/ProductsHero';
 
 function Gallery() {
   console.log('🎨 FIRESTORE Gallery component mounting at:', window.location.pathname);
@@ -13,7 +17,9 @@ function Gallery() {
 
   const ITEMS_PER_PAGE = 9;
 
-  // Load gallery data from API (Firestore)
+  const visibleFrom = (list) => (list || []).filter((img) => img.visible !== false);
+
+  // Load gallery data from API (Firestore); fall back to local JSON in dev
   useEffect(() => {
     console.log('🎨 Gallery component mounted - loading from Firestore API');
     
@@ -23,14 +29,21 @@ function Gallery() {
         
         // Determine API endpoint based on environment
         const apiEndpoint = import.meta.env.DEV 
-          ? '/api/gallery-get'  // Development proxy
+          ? '/api/gallery-get'  // Development (only works with netlify dev / proxy)
           : '/.netlify/functions/gallery-get';  // Production
         
         console.log(`🌐 Fetching gallery data from: ${apiEndpoint}`);
         
         const response = await fetch(apiEndpoint);
-        if (!response.ok) {
-          throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+        const contentType = response.headers.get('content-type') || '';
+
+        // Vite SPA returns HTML for unknown /api routes — treat as missing API
+        if (!response.ok || !contentType.includes('application/json')) {
+          throw new Error(
+            !response.ok
+              ? `API request failed: ${response.status} ${response.statusText}`
+              : 'API returned non-JSON (Netlify functions not running in plain Vite dev)'
+          );
         }
         
         const data = await response.json();
@@ -38,8 +51,7 @@ function Gallery() {
           throw new Error(data.error || 'API returned error');
         }
         
-        // Filter for visible images only
-        const visibleImages = (data.images || []).filter(img => img.visible);
+        const visibleImages = visibleFrom(data.images);
         
         setImages(visibleImages);
         setError(null);
@@ -47,8 +59,17 @@ function Gallery() {
         
       } catch (err) {
         console.error('Failed to load gallery from API:', err);
-        setError(`Failed to load gallery: ${err.message}`);
-        setImages([]); // Clear images on error
+
+        // Local preview: use checked-in gallery data so the Products page is usable
+        if (import.meta.env.DEV && localGalleryData?.images?.length) {
+          const visibleImages = visibleFrom(localGalleryData.images);
+          console.warn(`🔧 Dev fallback: using local gallery-data.json (${visibleImages.length} images)`);
+          setImages(visibleImages);
+          setError(null);
+        } else {
+          setError(err.message);
+          setImages([]);
+        }
       } finally {
         setLoading(false);
       }
@@ -80,18 +101,11 @@ function Gallery() {
   if (loading) {
     return (
       <>
-        <section className="gallery-hero" aria-labelledby="gallery-hero-title">
-          <div className="container">
-            <div className="gallery-hero__content">
-              <h1 className="hero__title" id="gallery-hero-title">Our Work</h1>
-              <p className="hero__subtitle">Precision laser engraving for businesses and individuals</p>
-            </div>
-          </div>
-        </section>
+        <ProductsHero />
         <main className="main">
           <div className="container" style={{ padding: '2rem', textAlign: 'center' }}>
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
-            <p style={{ marginTop: '1rem' }}>Loading gallery...</p>
+            <p style={{ marginTop: '1rem' }}>Loading products...</p>
           </div>
         </main>
       </>
@@ -101,19 +115,12 @@ function Gallery() {
   if (error) {
     return (
       <>
-        <section className="gallery-hero" aria-labelledby="gallery-hero-title">
-          <div className="container">
-            <div className="gallery-hero__content">
-              <h1 className="hero__title" id="gallery-hero-title">Our Work</h1>
-              <p className="hero__subtitle">Precision laser engraving for businesses and individuals</p>
-            </div>
-          </div>
-        </section>
+        <ProductsHero />
         <main className="main">
           <div className="container" style={{ padding: '2rem', textAlign: 'center' }}>
             <div style={{ color: 'var(--clr-error, #ef4444)', marginBottom: '1rem' }}>
-              <h2>Gallery Unavailable</h2>
-              <p>Unable to load gallery data: {error}</p>
+              <h2>Products Unavailable</h2>
+              <p>Unable to load products: {error}</p>
             </div>
             <button 
               onClick={() => window.location.reload()} 
@@ -191,33 +198,22 @@ function Gallery() {
   return (
     <>
       <Helmet>
-        <title>Work Gallery — Underdog Lazer</title>
+        <title>Products — Underdog Lazer</title>
         <meta name="description" content="Browse laser engraving and cutting projects — custom gifts, leather patches, metal business cards, drinkware, and more." />
-        <meta property="og:title" content="Work Gallery — Underdog Lazer" />
+        <meta property="og:title" content="Products — Underdog Lazer" />
         <meta property="og:description" content="Browse laser engraving and cutting projects — gifts, patches, metal cards, drinkware, and more." />
       </Helmet>
-      {/* Gallery Hero Section */}
-      <section className="gallery-hero" aria-labelledby="gallery-hero-title">
-        <div className="container">
-          <div className="gallery-hero__content">
-            <h1 className="hero__title" id="gallery-hero-title">
-              Our Work
-            </h1>
-            <p className="hero__subtitle">
-              Precision laser engraving for businesses and individuals
-            </p>
-          </div>
-        </div>
-      </section>
+
+      <ProductsHero />
 
       <main className="main">
-        {/* Gallery Section */}
+        {/* Products Section */}
         <section className="gallery" aria-labelledby="gallery-section-title">
         <div className="container">
-          <h2 className="sr-only" id="gallery-section-title">Gallery of Our Work</h2>
+          <h2 className="sr-only" id="gallery-section-title">Products</h2>
           
           {/* Category Filter */}
-          <div className="gallery__categories" role="tablist" aria-label="Filter gallery by category">
+          <div className="gallery__categories" role="tablist" aria-label="Filter products by category">
             {categories.map((category) => (
               <button
                 key={category.id}
@@ -243,7 +239,7 @@ function Gallery() {
           >
             {paginatedImages.map((image) => (
               <article
-                key={image.filename}
+                key={image.id ?? image.filename ?? image.src}
                 className="gallery__item"
                 onClick={() => setSelectedImage(image)}
                 role="button"
@@ -319,18 +315,6 @@ function Gallery() {
         </div>
       </section>
 
-      {/* CTA Section — headline only; the green footer band below provides the button */}
-      <section className="section gallery-cta" aria-labelledby="cta-title">
-        <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
-            <h2 className="section-title" id="cta-title">Ready to Create Something Amazing?</h2>
-            <p className="section-subtitle">
-              Let's bring your ideas to life with precision laser engraving
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Modal for selected image */}
       {selectedImage && (
         <div 
@@ -369,6 +353,13 @@ function Gallery() {
                   <dd>{selectedImage.category}</dd>
                 </div>
               </dl>
+
+              <p className="modal__quote-note">
+                Interested in something like this?
+              </p>
+              <Link to="/contact" className="btn btn-primary modal__quote-btn">
+                Request a Quote
+              </Link>
             </div>
           </div>
         </div>

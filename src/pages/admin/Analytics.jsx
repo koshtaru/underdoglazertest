@@ -863,7 +863,7 @@ const Analytics = () => {
       if (pagePath === '/' || pagePath === '/home') return Home;
       if (pagePath.includes('/about')) return Users;
       if (pagePath.includes('/contact')) return MessageSquare;
-      if (pagePath.includes('/gallery')) return Eye;
+      if (pagePath.includes('/gallery') || pagePath.includes('/products')) return Eye;
       if (pagePath.includes('/admin')) return Gauge;
       if (pagePath.includes('.pdf') || pagePath.includes('.doc')) return File;
       if (pagePath.startsWith('http')) return Globe;

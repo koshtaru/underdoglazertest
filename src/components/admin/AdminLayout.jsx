@@ -34,7 +34,7 @@ const AdminLayout = () => {
   const navigation = [
     { name: 'Dashboard', href: '/admin/dashboard', icon: Home },
     { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
-    { name: 'Gallery Management', href: '/admin/gallery', icon: Images },
+    { name: 'Products', href: '/admin/gallery', icon: Images },
     { name: 'User Management', href: '/admin/users', icon: Users },
     { name: 'Settings', href: '/admin/settings', icon: Settings }
   ];
