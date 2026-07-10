@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import './styles/global.css'
 import React, { lazy, useEffect } from 'react'
 import Header from './components/Header'
@@ -44,7 +44,8 @@ function AppLayout() {
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/products" element={<Gallery />} />
+        <Route path="/gallery" element={<Navigate to="/products" replace />} />
         <Route path="/contact" element={<Contact />} />
 
         {/* Admin Login Route */}

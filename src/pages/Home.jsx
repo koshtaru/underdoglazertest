@@ -188,8 +188,8 @@ function Home() {
           </div>
 
           <div style={{ textAlign: 'right', marginTop: 'var(--space-md)' }}>
-            <Link to="/gallery" className="text-accent" style={{ fontWeight: 500, textDecoration: 'none' }}>
-              View Full Gallery →
+            <Link to="/products" className="text-accent" style={{ fontWeight: 500, textDecoration: 'none' }}>
+              View All Products →
             </Link>
           </div>
         </div>

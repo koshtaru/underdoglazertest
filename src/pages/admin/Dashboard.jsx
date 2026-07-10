@@ -253,7 +253,7 @@ const Dashboard = () => {
                     Upload New Images
                   </h4>
                   <p className="text-sm text-gray-400">
-                    Add new portfolio items to the gallery
+                    Add new portfolio items to products
                   </p>
                 </div>
               </button>
